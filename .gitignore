@@ -1,0 +1,9 @@
+# Secrets / local Supabase connection settings
+.env.supabase
+
+# Supabase local development cache/data
+supabase/.branches/
+supabase/.temp/
+
+# macOS
+.DS_Store
