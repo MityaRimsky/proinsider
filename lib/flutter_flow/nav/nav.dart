@@ -52,14 +52,98 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => HomePageWidget(),
         ),
         FFRoute(
-          name: SubscribesWidget.routeName,
-          path: SubscribesWidget.routePath,
-          builder: (context, params) => SubscribesWidget(),
+          name: SubscriptionsPageWidget.routeName,
+          path: SubscriptionsPageWidget.routePath,
+          builder: (context, params) => SubscriptionsPageWidget(),
         ),
         FFRoute(
           name: LivePageWidget.routeName,
           path: LivePageWidget.routePath,
           builder: (context, params) => LivePageWidget(),
+        ),
+        FFRoute(
+          name: ForecastDetailsPageWidget.routeName,
+          path: ForecastDetailsPageWidget.routePath,
+          builder: (context, params) => ForecastDetailsPageWidget(
+            cardId: params.getParam(
+              'cardId',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: SubscriptionDetailsPageWidget.routeName,
+          path: SubscriptionDetailsPageWidget.routePath,
+          builder: (context, params) => SubscriptionDetailsPageWidget(
+            planId: params.getParam(
+              'planId',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: LearningPageWidget.routeName,
+          path: LearningPageWidget.routePath,
+          builder: (context, params) => LearningPageWidget(),
+        ),
+        FFRoute(
+          name: LearningDetailsPageWidget.routeName,
+          path: LearningDetailsPageWidget.routePath,
+          builder: (context, params) => LearningDetailsPageWidget(
+            title: params.getParam(
+              'title',
+              ParamType.String,
+            ),
+            description: params.getParam(
+              'description',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ProfilePageWidget.routeName,
+          path: ProfilePageWidget.routePath,
+          builder: (context, params) => ProfilePageWidget(),
+        ),
+        FFRoute(
+          name: PrivacyPolicyPageWidget.routeName,
+          path: PrivacyPolicyPageWidget.routePath,
+          builder: (context, params) => PrivacyPolicyPageWidget(),
+        ),
+        FFRoute(
+          name: UserAgreementPageWidget.routeName,
+          path: UserAgreementPageWidget.routePath,
+          builder: (context, params) => UserAgreementPageWidget(),
+        ),
+        FFRoute(
+          name: SettingNotificationsPageWidget.routeName,
+          path: SettingNotificationsPageWidget.routePath,
+          builder: (context, params) => SettingNotificationsPageWidget(),
+        ),
+        FFRoute(
+          name: NotificationsPageWidget.routeName,
+          path: NotificationsPageWidget.routePath,
+          builder: (context, params) => NotificationsPageWidget(),
+        ),
+        FFRoute(
+          name: FavoritePageWidget.routeName,
+          path: FavoritePageWidget.routePath,
+          builder: (context, params) => FavoritePageWidget(),
+        ),
+        FFRoute(
+          name: AuthPageWidget.routeName,
+          path: AuthPageWidget.routePath,
+          builder: (context, params) => AuthPageWidget(),
+        ),
+        FFRoute(
+          name: ValidateCodePageWidget.routeName,
+          path: ValidateCodePageWidget.routePath,
+          builder: (context, params) => ValidateCodePageWidget(),
+        ),
+        FFRoute(
+          name: GuestProfilePageWidget.routeName,
+          path: GuestProfilePageWidget.routePath,
+          builder: (context, params) => GuestProfilePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

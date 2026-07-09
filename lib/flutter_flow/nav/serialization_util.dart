@@ -239,8 +239,38 @@ dynamic deserializeParam<T>(
       case ParamType.SupabaseRow:
         final data = json.decode(param) as Map<String, dynamic>;
         switch (T) {
-          case NewRow:
-            return NewRow(data);
+          case ForecastDetailsViewRow:
+            return ForecastDetailsViewRow(data);
+          case ForecastCardsDetailsViewRow:
+            return ForecastCardsDetailsViewRow(data);
+          case TeamsRow:
+            return TeamsRow(data);
+          case LivePredictionsRow:
+            return LivePredictionsRow(data);
+          case NotificationsRow:
+            return NotificationsRow(data);
+          case LearningBettingRow:
+            return LearningBettingRow(data);
+          case ForecastCardsRow:
+            return ForecastCardsRow(data);
+          case LearningBasicsRow:
+            return LearningBasicsRow(data);
+          case BookmakerBonusesRow:
+            return BookmakerBonusesRow(data);
+          case SubscriptionCardsViewRow:
+            return SubscriptionCardsViewRow(data);
+          case SubscriptionOptionsRow:
+            return SubscriptionOptionsRow(data);
+          case SubscriptionPlanDetailsViewRow:
+            return SubscriptionPlanDetailsViewRow(data);
+          case ForecastEventsRow:
+            return ForecastEventsRow(data);
+          case SubscriptionPlansRow:
+            return SubscriptionPlansRow(data);
+          case ForecastCardsFeedViewRow:
+            return ForecastCardsFeedViewRow(data);
+          case LearningTipsRow:
+            return LearningTipsRow(data);
           default:
             return null;
         }

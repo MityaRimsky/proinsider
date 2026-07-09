@@ -2,7 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' hide Provider;
 
 export 'database/database.dart';
 
-String _kSupabaseUrl = 'http://147.45.213.141:8000';
+String _kSupabaseUrl = 'https://proinsiderhub.ru';
 String _kSupabaseAnonKey =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzgwNjY0MDAyLCJleHAiOjE5MzgzNDQwMDJ9.84iQHItokHfmxUrPfFVi2_Th77h_ViCNvkQUFpEZ7RU';
 

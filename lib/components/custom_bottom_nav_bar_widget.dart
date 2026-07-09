@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'custom_bottom_nav_bar_model.dart';
 export 'custom_bottom_nav_bar_model.dart';
 
@@ -43,6 +44,8 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       height: 50.0,
@@ -122,7 +125,7 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
               highlightColor: Colors.transparent,
               onTap: () async {
                 context.pushNamed(
-                  SubscribesWidget.routeName,
+                  SubscriptionsPageWidget.routeName,
                   extra: <String, dynamic>{
                     '__transition_info__': TransitionInfo(
                       hasTransition: true,
@@ -237,22 +240,51 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
             ),
           ),
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Icon(
-                    Icons.school_rounded,
-                    color: widget.activeTab == 'education'
-                        ? FlutterFlowTheme.of(context).primary
-                        : FlutterFlowTheme.of(context).tertiaryText,
-                    size: 24.0,
-                  ),
-                  Text(
-                    'Обучение',
-                    style: FlutterFlowTheme.of(context).bodySmall.override(
-                          font: GoogleFonts.roboto(
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                context.pushNamed(
+                  LearningPageWidget.routeName,
+                  extra: <String, dynamic>{
+                    '__transition_info__': TransitionInfo(
+                      hasTransition: true,
+                      transitionType: PageTransitionType.fade,
+                      duration: Duration(milliseconds: 0),
+                    ),
+                  },
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Icon(
+                      Icons.school_rounded,
+                      color: widget.activeTab == 'education'
+                          ? FlutterFlowTheme.of(context).primary
+                          : FlutterFlowTheme.of(context).tertiaryText,
+                      size: 24.0,
+                    ),
+                    Text(
+                      'Обучение',
+                      style: FlutterFlowTheme.of(context).bodySmall.override(
+                            font: GoogleFonts.roboto(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                            color: widget.activeTab == 'education'
+                                ? FlutterFlowTheme.of(context).primary
+                                : FlutterFlowTheme.of(context).tertiaryText,
+                            fontSize: 10.0,
+                            letterSpacing: 0.0,
                             fontWeight: FlutterFlowTheme.of(context)
                                 .bodySmall
                                 .fontWeight,
@@ -260,40 +292,73 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                                 .bodySmall
                                 .fontStyle,
                           ),
-                          color: widget.activeTab == 'education'
-                              ? FlutterFlowTheme.of(context).primary
-                              : FlutterFlowTheme.of(context).tertiaryText,
-                          fontSize: 10.0,
-                          letterSpacing: 0.0,
-                          fontWeight:
-                              FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                        ),
-                  ),
-                ].divide(SizedBox(
-                    height:
-                        FlutterFlowTheme.of(context).designToken.spacing.xs)),
+                    ),
+                  ].divide(SizedBox(
+                      height:
+                          FlutterFlowTheme.of(context).designToken.spacing.xs)),
+                ),
               ),
             ),
           ),
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Icon(
-                    FFIcons.kframe,
-                    color: widget.activeTab == 'profile'
-                        ? FlutterFlowTheme.of(context).primary
-                        : FlutterFlowTheme.of(context).tertiaryText,
-                    size: 24.0,
-                  ),
-                  Text(
-                    'Профиль',
-                    style: FlutterFlowTheme.of(context).bodySmall.override(
-                          font: GoogleFonts.roboto(
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                if (FFAppState().isLoggedIn) {
+                  context.pushNamed(
+                    ProfilePageWidget.routeName,
+                    extra: <String, dynamic>{
+                      '__transition_info__': TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                } else {
+                  context.pushNamed(
+                    GuestProfilePageWidget.routeName,
+                    extra: <String, dynamic>{
+                      '__transition_info__': TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Icon(
+                      FFIcons.kframe,
+                      color: widget.activeTab == 'profile'
+                          ? FlutterFlowTheme.of(context).primary
+                          : FlutterFlowTheme.of(context).tertiaryText,
+                      size: 24.0,
+                    ),
+                    Text(
+                      'Профиль',
+                      style: FlutterFlowTheme.of(context).bodySmall.override(
+                            font: GoogleFonts.roboto(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                            color: widget.activeTab == 'profile'
+                                ? FlutterFlowTheme.of(context).primary
+                                : FlutterFlowTheme.of(context).tertiaryText,
+                            fontSize: 10.0,
+                            letterSpacing: 0.0,
                             fontWeight: FlutterFlowTheme.of(context)
                                 .bodySmall
                                 .fontWeight,
@@ -301,20 +366,11 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                                 .bodySmall
                                 .fontStyle,
                           ),
-                          color: widget.activeTab == 'profile'
-                              ? FlutterFlowTheme.of(context).primary
-                              : FlutterFlowTheme.of(context).tertiaryText,
-                          fontSize: 10.0,
-                          letterSpacing: 0.0,
-                          fontWeight:
-                              FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                        ),
-                  ),
-                ].divide(SizedBox(
-                    height:
-                        FlutterFlowTheme.of(context).designToken.spacing.xs)),
+                    ),
+                  ].divide(SizedBox(
+                      height:
+                          FlutterFlowTheme.of(context).designToken.spacing.xs)),
+                ),
               ),
             ),
           ),

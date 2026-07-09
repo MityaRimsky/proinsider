@@ -29,7 +29,22 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      context.goNamed(HomePageWidget.routeName);
+      await Future.delayed(
+        Duration(
+          milliseconds: 5000,
+        ),
+      );
+
+      context.goNamed(
+        HomePageWidget.routeName,
+        extra: <String, dynamic>{
+          '__transition_info__': TransitionInfo(
+            hasTransition: true,
+            transitionType: PageTransitionType.fade,
+            duration: Duration(milliseconds: 0),
+          ),
+        },
+      );
     });
   }
 

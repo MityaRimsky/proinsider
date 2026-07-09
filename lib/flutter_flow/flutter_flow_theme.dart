@@ -159,12 +159,12 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color primaryText = const Color(0xFF4C4B4B);
   late Color secondaryText = const Color(0xFF676767);
   late Color primaryBackground = const Color(0xFFFFFFFF);
-  late Color secondaryBackground = const Color(0xFFF4F4F4);
+  late Color secondaryBackground = const Color(0xFFF5F5F5);
   late Color accent1 = const Color(0xFF00AEFF);
-  late Color accent2 = const Color(0xFFFFB623);
+  late Color accent2 = const Color(0xFFFFAB00);
   late Color accent3 = const Color(0xFF00C972);
   late Color accent4 = const Color(0xFFFE2525);
-  late Color success = const Color(0xFF22C55E);
+  late Color success = const Color(0xFF2AC200);
   late Color warning = const Color(0xFFFFD102);
   late Color error = const Color(0xFFF43F5E);
   late Color info = const Color(0xFFFFFFFF);
@@ -355,16 +355,16 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color primaryBackground = const Color(0xFF353535);
   late Color secondaryBackground = const Color(0xFF4C4B4B);
   late Color accent1 = const Color(0xFF00AEFF);
-  late Color accent2 = const Color(0xFFFFB623);
+  late Color accent2 = const Color(0xFFFFAB00);
   late Color accent3 = const Color(0xFF00C972);
   late Color accent4 = const Color(0xFFFE2525);
-  late Color success = const Color(0xFF22C55E);
+  late Color success = const Color(0xFF2AC200);
   late Color warning = const Color(0xFFFFD102);
   late Color error = const Color(0xFFF43F5E);
   late Color info = const Color(0xFFFFFFFF);
 
   late Color tertiaryText = const Color(0xFFE2E2E2);
-  late Color tertiaryBackground = const Color(0xFF555555);
+  late Color tertiaryBackground = const Color(0xFF595959);
   late Color darkText = const Color(0xFF4C4B4B);
   late Color darkBrightText = const Color(0xFF676767);
   late Color whiteText = const Color(0xFFFFFFFF);
@@ -437,7 +437,7 @@ extension TextStyleHelper on TextStyle {
     List<Shadow>? shadows,
     String? package,
   }) {
-    if (useGoogleFonts && fontFamily != null) {
+    if (useGoogleFonts && fontFamily != null && fontFamily.isNotEmpty) {
       font = GoogleFonts.getFont(fontFamily,
           fontWeight: fontWeight ?? this.fontWeight,
           fontStyle: fontStyle ?? this.fontStyle);

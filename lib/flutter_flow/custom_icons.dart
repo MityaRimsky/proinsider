@@ -8,6 +8,9 @@ class FFIcons {
   static const String _proinsiderIconsKit2Family = 'ProinsiderIconsKit2';
   static const String _proinsiderIconsKit3Family = 'ProinsiderIconsKit3';
   static const String _proinsiderIconsKit4Family = 'ProinsiderIconsKit4';
+  static const String _proinsiderIconsKit5Family = 'ProinsiderIconsKit5';
+  static const String _proinsiderIconsKit6Family = 'ProinsiderIconsKit6';
+  static const String _proinsiderIconsKit7Family = 'ProinsiderIconsKit7';
 
   // iProinsider-navi-and-tab-bar
   static const IconData kcrown =
@@ -56,4 +59,44 @@ class FFIcons {
       IconData(0xe900, fontFamily: _proinsiderIconsKit4Family);
   static const IconData klock =
       IconData(0xe901, fontFamily: _proinsiderIconsKit4Family);
+
+  // Proinsider-icons-kit5
+  static const IconData kbalanceLine =
+      IconData(0xe900, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kbrightLine =
+      IconData(0xe901, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kchatLine =
+      IconData(0xe902, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kclock =
+      IconData(0xe903, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kcup =
+      IconData(0xe904, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kdarkLine =
+      IconData(0xe905, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kdocumentText =
+      IconData(0xe906, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kfavoriteChart =
+      IconData(0xe907, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kflashLine =
+      IconData(0xe908, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData knotificationLine =
+      IconData(0xe909, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kranking =
+      IconData(0xe90a, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData kshieldTick =
+      IconData(0xe90b, fontFamily: _proinsiderIconsKit5Family);
+  static const IconData ksumLine =
+      IconData(0xe90c, fontFamily: _proinsiderIconsKit5Family);
+
+  // Proinsider-icons-kit6
+  static const IconData kbasics =
+      IconData(0xe900, fontFamily: _proinsiderIconsKit6Family);
+  static const IconData ktips =
+      IconData(0xe901, fontFamily: _proinsiderIconsKit6Family);
+
+  // Proinsider-icons-kit7
+  static const IconData kdelete =
+      IconData(0xe900, fontFamily: _proinsiderIconsKit7Family);
+  static const IconData kexit =
+      IconData(0xe901, fontFamily: _proinsiderIconsKit7Family);
 }
