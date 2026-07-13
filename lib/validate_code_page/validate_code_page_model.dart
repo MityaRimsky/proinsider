@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 class ValidateCodePageModel extends FlutterFlowModel<ValidateCodePageWidget> {
   ///  Local state fields for this page.
 
-  bool canResend = true;
+  bool canResend = false;
+
+  String otpState = 'idle';
 
   ///  State fields for stateful widgets in this page.
 
@@ -16,6 +18,8 @@ class ValidateCodePageModel extends FlutterFlowModel<ValidateCodePageWidget> {
   TextEditingController? oTPCode;
   FocusNode? oTPCodeFocusNode;
   String? Function(BuildContext, String?)? oTPCodeValidator;
+  // Stores action output result for [Custom Action - verifyOtpEmail] action in OTP_Code widget.
+  bool? isVerified;
   // State field(s) for Timer widget.
   final timerInitialTimeMs = 120000;
   int timerMilliseconds = 120000;

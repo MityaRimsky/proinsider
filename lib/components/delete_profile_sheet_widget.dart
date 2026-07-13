@@ -1,6 +1,8 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'delete_profile_sheet_model.dart';
@@ -124,8 +126,13 @@ class _DeleteProfileSheetWidgetState extends State<DeleteProfileSheetWidget> {
                 children: [
                   Expanded(
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        GoRouter.of(context).prepareAuthEvent();
+                        await authManager.signOut();
+                        GoRouter.of(context).clearRedirectLocation();
+
+                        context.goNamedAuth(
+                            SplashScreenWidget.routeName, context.mounted);
                       },
                       text: 'Удалить',
                       options: FFButtonOptions(

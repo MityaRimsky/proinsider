@@ -1,9 +1,9 @@
+import '/auth/base_auth_user_provider.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'custom_bottom_nav_bar_model.dart';
 export 'custom_bottom_nav_bar_model.dart';
 
@@ -44,8 +44,6 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       height: 50.0,
@@ -307,7 +305,7 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                if (FFAppState().isLoggedIn) {
+                if (loggedIn == true) {
                   context.pushNamed(
                     ProfilePageWidget.routeName,
                     extra: <String, dynamic>{

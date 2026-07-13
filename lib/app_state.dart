@@ -77,10 +77,10 @@ class FFAppState extends ChangeNotifier {
     _authEmail = value;
   }
 
-  bool _isLoggedIn = false;
-  bool get isLoggedIn => _isLoggedIn;
-  set isLoggedIn(bool value) {
-    _isLoggedIn = value;
+  bool _isGoogleAuthEnabled = false;
+  bool get isGoogleAuthEnabled => _isGoogleAuthEnabled;
+  set isGoogleAuthEnabled(bool value) {
+    _isGoogleAuthEnabled = value;
   }
 }
 

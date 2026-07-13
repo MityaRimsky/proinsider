@@ -1,13 +1,16 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'auth_page_model.dart';
 export 'auth_page_model.dart';
 
@@ -44,6 +47,8 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -303,6 +308,9 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                     FFAppState().authEmail =
                                         _model.fieldForEmailTextController.text;
                                     safeSetState(() {});
+                                    await actions.sendOtpEmail(
+                                      FFAppState().authEmail,
+                                    );
 
                                     context.pushNamed(
                                         ValidateCodePageWidget.routeName);
@@ -344,28 +352,40 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 64.0, 0.0, 0.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Container(
-                                width: double.infinity,
-                                height: 1.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).alternate,
+                      if (FFAppState().isGoogleAuthEnabled == true)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 64.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 1.0,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'Или',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.roboto(
+                              Text(
+                                'Или',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.roboto(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      letterSpacing: 0.0,
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontWeight,
@@ -373,44 +393,86 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                              ),
+                              Flexible(
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 1.0,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
                                   ),
-                            ),
-                            Flexible(
-                              child: Container(
-                                width: double.infinity,
-                                height: 1.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).alternate,
                                 ),
                               ),
-                            ),
-                          ].divide(SizedBox(width: 16.0)),
+                            ].divide(SizedBox(width: 16.0)),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                        child: Builder(
-                          builder: (context) {
-                            if ((isAndroid == true) || (isWeb == true)) {
-                              return Semantics(
-                                label: 'login with google',
-                                child: FFButtonWidget(
+                      if (FFAppState().isGoogleAuthEnabled == true)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 24.0, 0.0, 0.0),
+                          child: Builder(
+                            builder: (context) {
+                              if ((isAndroid == true) || (isWeb == true)) {
+                                return Semantics(
+                                  label: 'login with google',
+                                  child: FFButtonWidget(
+                                    onPressed: () {
+                                      print('Button pressed ...');
+                                    },
+                                    text: 'Продолжить с Google',
+                                    icon: FaIcon(
+                                      FontAwesomeIcons.google,
+                                      size: 20.0,
+                                    ),
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 8.0, 0.0),
+                                      iconColor: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.roboto(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(24.0),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
                                   },
-                                  text: 'Продолжить с Google',
+                                  text: 'Продолжить с Apple',
                                   icon: FaIcon(
-                                    FontAwesomeIcons.google,
+                                    FontAwesomeIcons.apple,
                                     size: 20.0,
                                   ),
                                   options: FFButtonOptions(
@@ -450,58 +512,11 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                     elevation: 0.0,
                                     borderRadius: BorderRadius.circular(24.0),
                                   ),
-                                ),
-                              );
-                            } else {
-                              return FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
-                                },
-                                text: 'Продолжить с Apple',
-                                icon: FaIcon(
-                                  FontAwesomeIcons.apple,
-                                  size: 20.0,
-                                ),
-                                options: FFButtonOptions(
-                                  width: double.infinity,
-                                  height: 48.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 8.0, 0.0),
-                                  iconColor: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        font: GoogleFonts.roboto(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
-                                  elevation: 0.0,
-                                  borderRadius: BorderRadius.circular(24.0),
-                                ),
-                              );
-                            }
-                          },
+                                );
+                              }
+                            },
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -553,6 +568,12 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                         .labelSmall
                                         .fontStyle,
                                   ),
+                          mouseCursor: SystemMouseCursors.click,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              context
+                                  .pushNamed(UserAgreementPageWidget.routeName);
+                            },
                         ),
                         TextSpan(
                           text: 'и ',
@@ -596,6 +617,12 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                         .labelSmall
                                         .fontStyle,
                                   ),
+                          mouseCursor: SystemMouseCursors.click,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              context
+                                  .pushNamed(PrivacyPolicyPageWidget.routeName);
+                            },
                         )
                       ],
                       style: FlutterFlowTheme.of(context).bodyMedium.override(

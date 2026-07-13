@@ -1,12 +1,16 @@
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'validate_code_page_model.dart';
@@ -22,17 +26,48 @@ class ValidateCodePageWidget extends StatefulWidget {
   State<ValidateCodePageWidget> createState() => _ValidateCodePageWidgetState();
 }
 
-class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget> {
+class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget>
+    with TickerProviderStateMixin {
   late ValidateCodePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ValidateCodePageModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.timerController.onStartTimer();
+    });
+
     _model.oTPCodeFocusNode ??= FocusNode();
+
+    animationsMap.addAll({
+      'pinCodeOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          ShakeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 450.0.ms,
+            hz: 5,
+            offset: Offset(5.0, 0.0),
+            rotation: 0,
+          ),
+        ],
+      ),
+    });
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -159,30 +194,35 @@ class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget> {
                           appContext: context,
                           length: 6,
                           textStyle: FlutterFlowTheme.of(context)
-                              .titleLarge
+                              .titleMedium
                               .override(
                                 font: GoogleFonts.roboto(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleLarge
-                                      .fontWeight,
+                                  fontWeight: FontWeight.bold,
                                   fontStyle: FlutterFlowTheme.of(context)
-                                      .titleLarge
+                                      .titleMedium
                                       .fontStyle,
                                 ),
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: () {
+                                  if (_model.otpState == 'success') {
+                                    return FlutterFlowTheme.of(context).success;
+                                  } else if (_model.otpState == 'error') {
+                                    return FlutterFlowTheme.of(context).error;
+                                  } else {
+                                    return FlutterFlowTheme.of(context)
+                                        .primaryText;
+                                  }
+                                }(),
                                 letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .titleLarge
-                                    .fontWeight,
+                                fontWeight: FontWeight.bold,
                                 fontStyle: FlutterFlowTheme.of(context)
-                                    .titleLarge
+                                    .titleMedium
                                     .fontStyle,
                               ),
                           mainAxisAlignment: MainAxisAlignment.center,
                           enableActiveFill: false,
                           autoFocus: true,
                           focusNode: _model.oTPCodeFocusNode,
-                          enablePinAutofill: false,
+                          enablePinAutofill: true,
                           errorTextSpace: 16.0,
                           showCursor: false,
                           cursorColor: FlutterFlowTheme.of(context).primary,
@@ -203,21 +243,82 @@ class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget> {
                               topRight: Radius.circular(12.0),
                             ),
                             shape: PinCodeFieldShape.underline,
+                            activeColor:
+                                FlutterFlowTheme.of(context).primaryBackground,
                             inactiveColor:
                                 FlutterFlowTheme.of(context).primaryBackground,
                             selectedColor: FlutterFlowTheme.of(context).primary,
+                            activeFillColor: () {
+                              if (_model.otpState == 'success') {
+                                return FlutterFlowTheme.of(context).success;
+                              } else if (_model.otpState == 'error') {
+                                return FlutterFlowTheme.of(context).error;
+                              } else {
+                                return FlutterFlowTheme.of(context)
+                                    .primaryBackground;
+                              }
+                            }(),
+                            inactiveFillColor:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            selectedFillColor:
+                                FlutterFlowTheme.of(context).primary,
                           ),
                           controller: _model.oTPCode,
                           onChanged: (_) {},
                           onCompleted: (_) async {
-                            FFAppState().isLoggedIn = true;
-                            safeSetState(() {});
+                            _model.isVerified = await actions.verifyOtpEmail(
+                              FFAppState().authEmail,
+                              _model.oTPCode!.text,
+                            );
+                            if (_model.isVerified == true) {
+                              _model.otpState = 'success';
+                              safeSetState(() {});
+                              await Future.delayed(
+                                Duration(
+                                  milliseconds: 1000,
+                                ),
+                              );
 
-                            context.pushNamed(HomePageWidget.routeName);
+                              context.goNamed(
+                                HomePageWidget.routeName,
+                                extra: <String, dynamic>{
+                                  '__transition_info__': TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
+                            } else {
+                              _model.otpState = 'error';
+                              safeSetState(() {});
+                              if (animationsMap[
+                                      'pinCodeOnActionTriggerAnimation'] !=
+                                  null) {
+                                await animationsMap[
+                                        'pinCodeOnActionTriggerAnimation']!
+                                    .controller
+                                    .forward(from: 0.0);
+                              }
+                              await Future.delayed(
+                                Duration(
+                                  milliseconds: 1000,
+                                ),
+                              );
+                              safeSetState(() {
+                                _model.oTPCode?.clear();
+                              });
+                              _model.otpState = 'idle';
+                              safeSetState(() {});
+                            }
+
+                            safeSetState(() {});
                           },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator:
                               _model.oTPCodeValidator.asValidator(context),
+                        ).animateOnActionTrigger(
+                          animationsMap['pinCodeOnActionTriggerAnimation']!,
                         ),
                       ),
                     ],
@@ -310,8 +411,15 @@ class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget> {
                         );
                       } else {
                         return FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            _model.canResend = false;
+                            safeSetState(() {});
+                            _model.timerController.onResetTimer();
+
+                            _model.timerController.onStartTimer();
+                            await actions.sendOtpEmail(
+                              FFAppState().authEmail,
+                            );
                           },
                           text: 'Отправить код повторно  ',
                           options: FFButtonOptions(
