@@ -26,3 +26,5 @@ export '/validate_code_page/validate_code_page_widget.dart'
     show ValidateCodePageWidget;
 export '/guest_profile_page/guest_profile_page_widget.dart'
     show GuestProfilePageWidget;
+export '/pages/logged_in_splash_screen/logged_in_splash_screen_widget.dart'
+    show LoggedInSplashScreenWidget;

@@ -94,7 +94,7 @@ class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget>
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -273,22 +273,35 @@ class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget>
                             if (_model.isVerified == true) {
                               _model.otpState = 'success';
                               safeSetState(() {});
-                              await Future.delayed(
-                                Duration(
-                                  milliseconds: 1000,
-                                ),
-                              );
-
-                              context.goNamed(
-                                HomePageWidget.routeName,
-                                extra: <String, dynamic>{
-                                  '__transition_info__': TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                  ),
-                                },
-                              );
+                              if (FFAppState().pendingPlanId > 0) {
+                                context.goNamed(
+                                  SubscriptionDetailsPageWidget.routeName,
+                                  queryParameters: {
+                                    'planId': serializeParam(
+                                      FFAppState().pendingPlanId,
+                                      ParamType.int,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    '__transition_info__': TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 0),
+                                    ),
+                                  },
+                                );
+                              } else {
+                                context.goNamed(
+                                  HomePageWidget.routeName,
+                                  extra: <String, dynamic>{
+                                    '__transition_info__': TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 0),
+                                    ),
+                                  },
+                                );
+                              }
                             } else {
                               _model.otpState = 'error';
                               safeSetState(() {});

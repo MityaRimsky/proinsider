@@ -62,6 +62,13 @@ class _GoldWidgetState extends State<GoldWidget> {
               ParamType.int,
             ),
           }.withoutNulls,
+          extra: <String, dynamic>{
+            '__transition_info__': TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.rightToLeft,
+              duration: Duration(milliseconds: 150),
+            ),
+          },
         );
       },
       child: Container(
@@ -330,13 +337,8 @@ class _GoldWidgetState extends State<GoldWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        FFIcons.klock,
-                        color: FlutterFlowTheme.of(context).secondary,
-                        size: 20.0,
-                      ),
                       Text(
-                        'Открыть прогноз',
+                        'Смотреть прогноз',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.roboto(
                                 fontWeight: FlutterFlowTheme.of(context)

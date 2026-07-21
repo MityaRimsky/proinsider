@@ -76,14 +76,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? HomePageWidget() : SplashScreenWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? LoggedInSplashScreenWidget()
+          : SplashScreenWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? HomePageWidget()
+              ? LoggedInSplashScreenWidget()
               : SplashScreenWidget(),
         ),
         FFRoute(
@@ -189,6 +190,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: GuestProfilePageWidget.routeName,
           path: GuestProfilePageWidget.routePath,
           builder: (context, params) => GuestProfilePageWidget(),
+        ),
+        FFRoute(
+          name: LoggedInSplashScreenWidget.routeName,
+          path: LoggedInSplashScreenWidget.routePath,
+          builder: (context, params) => LoggedInSplashScreenWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -373,8 +379,8 @@ class FFRoute {
           final child = appStateNotifier.loading
               ? Center(
                   child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
+                    width: 32.0,
+                    height: 32.0,
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
                         FlutterFlowTheme.of(context).primary,

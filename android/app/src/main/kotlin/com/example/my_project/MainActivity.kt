@@ -1,4 +1,4 @@
-package com.mycompany.proinsider
+package ru.proinsider.app
 
 import io.flutter.embedding.android.FlutterActivity
 

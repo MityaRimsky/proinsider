@@ -60,7 +60,7 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -313,7 +313,16 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                     );
 
                                     context.pushNamed(
-                                        ValidateCodePageWidget.routeName);
+                                      ValidateCodePageWidget.routeName,
+                                      extra: <String, dynamic>{
+                                        '__transition_info__': TransitionInfo(
+                                          hasTransition: true,
+                                          transitionType:
+                                              PageTransitionType.rightToLeft,
+                                          duration: Duration(milliseconds: 150),
+                                        ),
+                                      },
+                                    );
                                   },
                             text: 'Продолжить',
                             options: FFButtonOptions(

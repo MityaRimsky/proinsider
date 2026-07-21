@@ -55,7 +55,7 @@ class _LearningDetailsPageWidgetState extends State<LearningDetailsPageWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [

@@ -61,8 +61,8 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: Center(
               child: SizedBox(
-                width: 50.0,
-                height: 50.0,
+                width: 32.0,
+                height: 32.0,
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
                     FlutterFlowTheme.of(context).primary,
@@ -114,7 +114,7 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                   ),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 56.0, 16.0, 32.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 48.0, 16.0, 32.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -131,8 +131,8 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                 context.safePop();
                               },
                               child: Container(
-                                width: 32.0,
-                                height: 32.0,
+                                width: 48.0,
+                                height: 48.0,
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
                                   shape: BoxShape.circle,
@@ -191,58 +191,59 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                         .fontStyle,
                                   ),
                             ),
-                            Container(
-                              width: 32.0,
-                              height: 32.0,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Builder(
-                                  builder: (context) {
-                                    if (FFAppState()
-                                        .favoriteForecast
-                                        .contains(widget.cardId)) {
-                                      return InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          FFAppState()
-                                              .removeFromFavoriteForecast(
-                                                  widget.cardId!);
-                                          safeSetState(() {});
-                                        },
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Builder(
+                                builder: (context) {
+                                  if (FFAppState()
+                                      .favoriteForecast
+                                      .contains(widget.cardId)) {
+                                    return InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        FFAppState().removeFromFavoriteForecast(
+                                            widget.cardId!);
+                                        safeSetState(() {});
+                                      },
+                                      child: Container(
+                                        width: 48.0,
+                                        height: 48.0,
+                                        decoration: BoxDecoration(),
                                         child: Icon(
                                           FFIcons.karchiveTick,
                                           color: FlutterFlowTheme.of(context)
                                               .whiteText,
                                           size: 24.0,
                                         ),
-                                      );
-                                    } else {
-                                      return InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          FFAppState().addToFavoriteForecast(
-                                              widget.cardId!);
-                                          safeSetState(() {});
-                                        },
+                                      ),
+                                    );
+                                  } else {
+                                    return InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        FFAppState().addToFavoriteForecast(
+                                            widget.cardId!);
+                                        safeSetState(() {});
+                                      },
+                                      child: Container(
+                                        width: 48.0,
+                                        height: 48.0,
+                                        decoration: BoxDecoration(),
                                         child: Icon(
                                           FFIcons.karchiveAdd,
                                           color: Color(0xB3FFFFFF),
                                           size: 24.0,
                                         ),
-                                      );
-                                    }
-                                  },
-                                ),
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ],
@@ -262,7 +263,7 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                                   ?.resultStatus ==
                                               'pending'
                                           ? 'Сегодня'
-                                          : 'FT',
+                                          : 'Завершен',
                                       'Сегодня',
                                     ),
                                     style: FlutterFlowTheme.of(context)
@@ -575,8 +576,8 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                               if (!snapshot.hasData) {
                                 return Center(
                                   child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
+                                    width: 32.0,
+                                    height: 32.0,
                                     child: CircularProgressIndicator(
                                       valueColor: AlwaysStoppedAnimation<Color>(
                                         FlutterFlowTheme.of(context).primary,
@@ -672,7 +673,7 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                             ),
                         ]
                             .divide(SizedBox(height: 8.0))
-                            .addToEnd(SizedBox(height: 24.0)),
+                            .addToEnd(SizedBox(height: 64.0)),
                       ),
                     ),
                   ),

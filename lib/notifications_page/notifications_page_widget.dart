@@ -50,7 +50,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -121,8 +121,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                       if (!snapshot.hasData) {
                         return Center(
                           child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 32.0,
+                            height: 32.0,
                             child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 FlutterFlowTheme.of(context).primary,
@@ -155,7 +155,17 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             highlightColor: Colors.transparent,
                             onTap: () async {
                               if (listViewNotificationsRow.planType == 'live') {
-                                context.pushNamed(LivePageWidget.routeName);
+                                context.pushNamed(
+                                  LivePageWidget.routeName,
+                                  extra: <String, dynamic>{
+                                    '__transition_info__': TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType:
+                                          PageTransitionType.rightToLeft,
+                                      duration: Duration(milliseconds: 150),
+                                    ),
+                                  },
+                                );
                               } else {
                                 context.pushNamed(
                                   ForecastDetailsPageWidget.routeName,
@@ -165,6 +175,14 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                       ParamType.int,
                                     ),
                                   }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    '__transition_info__': TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType:
+                                          PageTransitionType.rightToLeft,
+                                      duration: Duration(milliseconds: 150),
+                                    ),
+                                  },
                                 );
                               }
                             },

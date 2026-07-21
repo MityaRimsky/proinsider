@@ -82,6 +82,12 @@ class FFAppState extends ChangeNotifier {
   set isGoogleAuthEnabled(bool value) {
     _isGoogleAuthEnabled = value;
   }
+
+  int _pendingPlanId = 0;
+  int get pendingPlanId => _pendingPlanId;
+  set pendingPlanId(int value) {
+    _pendingPlanId = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

@@ -433,7 +433,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                               ].divide(SizedBox(width: 16.0)),
                             ),
                             Text(
-                              'FT',
+                              'Результат',
                               style: FlutterFlowTheme.of(context)
                                   .bodySmall
                                   .override(

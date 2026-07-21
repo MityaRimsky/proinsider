@@ -62,6 +62,13 @@ class _GoldPlanCardWidgetState extends State<GoldPlanCardWidget> {
               ParamType.int,
             ),
           }.withoutNulls,
+          extra: <String, dynamic>{
+            '__transition_info__': TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.rightToLeft,
+              duration: Duration(milliseconds: 150),
+            ),
+          },
         );
       },
       child: Container(

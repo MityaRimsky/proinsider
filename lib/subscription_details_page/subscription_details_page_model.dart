@@ -2,6 +2,7 @@ import '/components/gold_subscription_header_widget.dart';
 import '/components/live_subscription_header_widget.dart';
 import '/components/premium_subscription_header_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'subscription_details_page_widget.dart'
     show SubscriptionDetailsPageWidget;
 import 'package:flutter/material.dart';

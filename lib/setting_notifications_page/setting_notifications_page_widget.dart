@@ -51,7 +51,7 @@ class _SettingNotificationsPageWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -177,12 +177,12 @@ class _SettingNotificationsPageWidgetState
                         onChanged: (newValue) async {
                           safeSetState(() => _model.switchValue1 = newValue);
                         },
-                        activeColor: FlutterFlowTheme.of(context).primary,
+                        activeColor: FlutterFlowTheme.of(context).whiteText,
                         activeTrackColor: FlutterFlowTheme.of(context).primary,
                         inactiveTrackColor:
                             FlutterFlowTheme.of(context).alternate,
                         inactiveThumbColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
+                            FlutterFlowTheme.of(context).whiteText,
                       ),
                     ].divide(SizedBox(width: 16.0)),
                   ),
@@ -252,12 +252,12 @@ class _SettingNotificationsPageWidgetState
                         onChanged: (newValue) async {
                           safeSetState(() => _model.switchValue2 = newValue);
                         },
-                        activeColor: FlutterFlowTheme.of(context).primary,
+                        activeColor: FlutterFlowTheme.of(context).whiteText,
                         activeTrackColor: FlutterFlowTheme.of(context).primary,
                         inactiveTrackColor:
                             FlutterFlowTheme.of(context).alternate,
                         inactiveThumbColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
+                            FlutterFlowTheme.of(context).whiteText,
                       ),
                     ].divide(SizedBox(width: 16.0)),
                   ),

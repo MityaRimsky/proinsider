@@ -46,268 +46,24 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 50.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.pushNamed(
-                  HomePageWidget.routeName,
-                  extra: <String, dynamic>{
-                    '__transition_info__': TransitionInfo(
-                      hasTransition: true,
-                      transitionType: PageTransitionType.fade,
-                      duration: Duration(milliseconds: 0),
-                    ),
-                  },
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Icon(
-                      Icons.bar_chart_rounded,
-                      color: widget.activeTab == 'forecasts'
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).tertiaryText,
-                      size: 24.0,
-                    ),
-                    Text(
-                      'Прогнозы',
-                      style: FlutterFlowTheme.of(context).bodySmall.override(
-                            font: GoogleFonts.roboto(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
-                            color: widget.activeTab == 'forecasts'
-                                ? FlutterFlowTheme.of(context).primary
-                                : FlutterFlowTheme.of(context).tertiaryText,
-                            fontSize: 10.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontStyle,
-                          ),
-                    ),
-                  ].divide(SizedBox(
-                      height:
-                          FlutterFlowTheme.of(context).designToken.spacing.xs)),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.pushNamed(
-                  SubscriptionsPageWidget.routeName,
-                  extra: <String, dynamic>{
-                    '__transition_info__': TransitionInfo(
-                      hasTransition: true,
-                      transitionType: PageTransitionType.fade,
-                      duration: Duration(milliseconds: 0),
-                    ),
-                  },
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Icon(
-                      FFIcons.kcrown,
-                      color: widget.activeTab == 'subscriptions'
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).tertiaryText,
-                      size: 24.0,
-                    ),
-                    Text(
-                      'Подписки',
-                      style: FlutterFlowTheme.of(context).bodySmall.override(
-                            font: GoogleFonts.roboto(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
-                            color: widget.activeTab == 'subscriptions'
-                                ? FlutterFlowTheme.of(context).primary
-                                : FlutterFlowTheme.of(context).tertiaryText,
-                            fontSize: 10.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontStyle,
-                          ),
-                    ),
-                  ].divide(SizedBox(
-                      height:
-                          FlutterFlowTheme.of(context).designToken.spacing.xs)),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.pushNamed(
-                  LivePageWidget.routeName,
-                  extra: <String, dynamic>{
-                    '__transition_info__': TransitionInfo(
-                      hasTransition: true,
-                      transitionType: PageTransitionType.fade,
-                      duration: Duration(milliseconds: 0),
-                    ),
-                  },
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Icon(
-                      FFIcons.kradar,
-                      color: widget.activeTab == 'live'
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).tertiaryText,
-                      size: 24.0,
-                    ),
-                    Text(
-                      'Live',
-                      style: FlutterFlowTheme.of(context).bodySmall.override(
-                            font: GoogleFonts.roboto(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
-                            color: widget.activeTab == 'live'
-                                ? FlutterFlowTheme.of(context).primary
-                                : FlutterFlowTheme.of(context).tertiaryText,
-                            fontSize: 10.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontStyle,
-                          ),
-                    ),
-                  ].divide(SizedBox(
-                      height:
-                          FlutterFlowTheme.of(context).designToken.spacing.xs)),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.pushNamed(
-                  LearningPageWidget.routeName,
-                  extra: <String, dynamic>{
-                    '__transition_info__': TransitionInfo(
-                      hasTransition: true,
-                      transitionType: PageTransitionType.fade,
-                      duration: Duration(milliseconds: 0),
-                    ),
-                  },
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Icon(
-                      Icons.school_rounded,
-                      color: widget.activeTab == 'education'
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).tertiaryText,
-                      size: 24.0,
-                    ),
-                    Text(
-                      'Обучение',
-                      style: FlutterFlowTheme.of(context).bodySmall.override(
-                            font: GoogleFonts.roboto(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
-                            color: widget.activeTab == 'education'
-                                ? FlutterFlowTheme.of(context).primary
-                                : FlutterFlowTheme.of(context).tertiaryText,
-                            fontSize: 10.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontStyle,
-                          ),
-                    ),
-                  ].divide(SizedBox(
-                      height:
-                          FlutterFlowTheme.of(context).designToken.spacing.xs)),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                if (loggedIn == true) {
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
                   context.pushNamed(
-                    ProfilePageWidget.routeName,
+                    HomePageWidget.routeName,
                     extra: <String, dynamic>{
                       '__transition_info__': TransitionInfo(
                         hasTransition: true,
@@ -316,9 +72,61 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                       ),
                     },
                   );
-                } else {
+                },
+                child: Container(
+                  decoration: BoxDecoration(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        Icons.bar_chart_rounded,
+                        color: widget.activeTab == 'forecasts'
+                            ? FlutterFlowTheme.of(context).primary
+                            : FlutterFlowTheme.of(context).tertiaryText,
+                        size: 24.0,
+                      ),
+                      Text(
+                        'Прогнозы',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              font: GoogleFonts.roboto(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontStyle,
+                              ),
+                              color: widget.activeTab == 'forecasts'
+                                  ? FlutterFlowTheme.of(context).primary
+                                  : FlutterFlowTheme.of(context).tertiaryText,
+                              fontSize: 10.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                      ),
+                    ].divide(SizedBox(
+                        height: FlutterFlowTheme.of(context)
+                            .designToken
+                            .spacing
+                            .xs)),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
                   context.pushNamed(
-                    GuestProfilePageWidget.routeName,
+                    SubscriptionsPageWidget.routeName,
                     extra: <String, dynamic>{
                       '__transition_info__': TransitionInfo(
                         hasTransition: true,
@@ -327,24 +135,35 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                       ),
                     },
                   );
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Icon(
-                      FFIcons.kframe,
-                      color: widget.activeTab == 'profile'
-                          ? FlutterFlowTheme.of(context).primary
-                          : FlutterFlowTheme.of(context).tertiaryText,
-                      size: 24.0,
-                    ),
-                    Text(
-                      'Профиль',
-                      style: FlutterFlowTheme.of(context).bodySmall.override(
-                            font: GoogleFonts.roboto(
+                },
+                child: Container(
+                  decoration: BoxDecoration(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        FFIcons.kcrownSimple,
+                        color: widget.activeTab == 'subscriptions'
+                            ? FlutterFlowTheme.of(context).primary
+                            : FlutterFlowTheme.of(context).tertiaryText,
+                        size: 24.0,
+                      ),
+                      Text(
+                        'Подписки',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              font: GoogleFonts.roboto(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontStyle,
+                              ),
+                              color: widget.activeTab == 'subscriptions'
+                                  ? FlutterFlowTheme.of(context).primary
+                                  : FlutterFlowTheme.of(context).tertiaryText,
+                              fontSize: 10.0,
+                              letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
                                   .bodySmall
                                   .fontWeight,
@@ -352,27 +171,220 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                                   .bodySmall
                                   .fontStyle,
                             ),
-                            color: widget.activeTab == 'profile'
-                                ? FlutterFlowTheme.of(context).primary
-                                : FlutterFlowTheme.of(context).tertiaryText,
-                            fontSize: 10.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodySmall
-                                .fontStyle,
-                          ),
-                    ),
-                  ].divide(SizedBox(
-                      height:
-                          FlutterFlowTheme.of(context).designToken.spacing.xs)),
+                      ),
+                    ].divide(SizedBox(
+                        height: FlutterFlowTheme.of(context)
+                            .designToken
+                            .spacing
+                            .xs)),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed(
+                    LivePageWidget.routeName,
+                    extra: <String, dynamic>{
+                      '__transition_info__': TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        FFIcons.kradar,
+                        color: widget.activeTab == 'live'
+                            ? FlutterFlowTheme.of(context).primary
+                            : FlutterFlowTheme.of(context).tertiaryText,
+                        size: 24.0,
+                      ),
+                      Text(
+                        'Live',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              font: GoogleFonts.roboto(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontStyle,
+                              ),
+                              color: widget.activeTab == 'live'
+                                  ? FlutterFlowTheme.of(context).primary
+                                  : FlutterFlowTheme.of(context).tertiaryText,
+                              fontSize: 10.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                      ),
+                    ].divide(SizedBox(
+                        height: FlutterFlowTheme.of(context)
+                            .designToken
+                            .spacing
+                            .xs)),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed(
+                    LearningPageWidget.routeName,
+                    extra: <String, dynamic>{
+                      '__transition_info__': TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 0),
+                      ),
+                    },
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        Icons.school_rounded,
+                        color: widget.activeTab == 'education'
+                            ? FlutterFlowTheme.of(context).primary
+                            : FlutterFlowTheme.of(context).tertiaryText,
+                        size: 24.0,
+                      ),
+                      Text(
+                        'Обучение',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              font: GoogleFonts.roboto(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontStyle,
+                              ),
+                              color: widget.activeTab == 'education'
+                                  ? FlutterFlowTheme.of(context).primary
+                                  : FlutterFlowTheme.of(context).tertiaryText,
+                              fontSize: 10.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                      ),
+                    ].divide(SizedBox(
+                        height: FlutterFlowTheme.of(context)
+                            .designToken
+                            .spacing
+                            .xs)),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  if (loggedIn == true) {
+                    context.pushNamed(
+                      ProfilePageWidget.routeName,
+                      extra: <String, dynamic>{
+                        '__transition_info__': TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 0),
+                        ),
+                      },
+                    );
+                  } else {
+                    context.pushNamed(
+                      GuestProfilePageWidget.routeName,
+                      extra: <String, dynamic>{
+                        '__transition_info__': TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 0),
+                        ),
+                      },
+                    );
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        FFIcons.kframe,
+                        color: widget.activeTab == 'profile'
+                            ? FlutterFlowTheme.of(context).primary
+                            : FlutterFlowTheme.of(context).tertiaryText,
+                        size: 24.0,
+                      ),
+                      Text(
+                        'Профиль',
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              font: GoogleFonts.roboto(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .fontStyle,
+                              ),
+                              color: widget.activeTab == 'profile'
+                                  ? FlutterFlowTheme.of(context).primary
+                                  : FlutterFlowTheme.of(context).tertiaryText,
+                              fontSize: 10.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                      ),
+                    ].divide(SizedBox(
+                        height: FlutterFlowTheme.of(context)
+                            .designToken
+                            .spacing
+                            .xs)),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -80,6 +80,13 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
               ParamType.int,
             ),
           }.withoutNulls,
+          extra: <String, dynamic>{
+            '__transition_info__': TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.rightToLeft,
+              duration: Duration(milliseconds: 150),
+            ),
+          },
         );
       },
       child: Container(
@@ -374,7 +381,9 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          widget.resultStatus == 'pending' ? 'Сегодня' : 'FT',
+                          widget.resultStatus == 'pending'
+                              ? 'Сегодня'
+                              : 'Зевершен',
                           style:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     font: GoogleFonts.roboto(

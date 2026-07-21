@@ -58,7 +58,7 @@ class _BonusSheetWidgetState extends State<BonusSheetWidget> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(24.0, 8.0, 24.0, 16.0),
+        padding: EdgeInsetsDirectional.fromSTEB(24.0, 8.0, 24.0, 64.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,8 +128,8 @@ class _BonusSheetWidgetState extends State<BonusSheetWidget> {
                   if (!snapshot.hasData) {
                     return Center(
                       child: SizedBox(
-                        width: 50.0,
-                        height: 50.0,
+                        width: 32.0,
+                        height: 32.0,
                         child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
                             FlutterFlowTheme.of(context).primary,
