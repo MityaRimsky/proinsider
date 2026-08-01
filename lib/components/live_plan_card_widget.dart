@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,12 +14,18 @@ class LivePlanCardWidget extends StatefulWidget {
     required this.subtitle,
     required this.displayPrice,
     required this.displayOptionName,
+    required this.planName,
+    this.expiresAt,
+    required this.hasAccess,
   });
 
   final int? planId;
   final String? subtitle;
   final double? displayPrice;
   final String? displayOptionName;
+  final String? planName;
+  final DateTime? expiresAt;
+  final bool? hasAccess;
 
   @override
   State<LivePlanCardWidget> createState() => _LivePlanCardWidgetState();
@@ -142,41 +149,64 @@ class _LivePlanCardWidgetState extends State<LivePlanCardWidget> {
                       ].divide(SizedBox(width: 8.0)),
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).whiteText,
-                          borderRadius: BorderRadius.circular(24.0),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 4.0, 4.0, 4.0),
-                          child: Text(
-                            'Подписка неактивна ',
-                            maxLines: 1,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).whiteText,
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 4.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (widget.hasAccess == true)
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 8.0, 0.0),
+                              child: Container(
+                                width: 16.0,
+                                height: 16.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.check_rounded,
+                                  color: FlutterFlowTheme.of(context).whiteText,
+                                  size: 12.0,
+                                ),
+                              ),
+                            ),
+                          Text(
+                            widget.hasAccess == true ? 'Активен' : 'Неактивен',
                             style: FlutterFlowTheme.of(context)
                                 .labelSmall
                                 .override(
                                   font: GoogleFonts.roboto(
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .labelSmall
+                                        .fontWeight,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .labelSmall
                                         .fontStyle,
                                   ),
-                                  color: Color(0xFFE10000),
-                                  fontSize: 12.0,
+                                  color: widget.hasAccess == true
+                                      ? FlutterFlowTheme.of(context).darkText
+                                      : FlutterFlowTheme.of(context).accent4,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .labelSmall
+                                      .fontWeight,
                                   fontStyle: FlutterFlowTheme.of(context)
                                       .labelSmall
                                       .fontStyle,
                                 ),
                           ),
-                        ),
+                        ],
                       ),
-                    ].divide(SizedBox(width: 8.0)),
+                    ),
                   ),
                 ],
               ),
@@ -309,7 +339,10 @@ class _LivePlanCardWidgetState extends State<LivePlanCardWidget> {
                     ),
                     Text(
                       valueOrDefault<String>(
-                        widget.subtitle,
+                        widget.hasAccess == true
+                            ? functions.formatSubscriptionStatus(
+                                widget.hasAccess, widget.expiresAt)
+                            : widget.subtitle,
                         'Более 85% проходных прогнозов ',
                       ),
                       style: FlutterFlowTheme.of(context).labelSmall.override(
@@ -346,7 +379,7 @@ class _LivePlanCardWidgetState extends State<LivePlanCardWidget> {
                   child: Align(
                     alignment: AlignmentDirectional(0.0, 0.0),
                     child: Text(
-                      'Подключить',
+                      widget.hasAccess == true ? 'Управлять' : 'Подключить',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             font: GoogleFonts.roboto(
                               fontWeight: FlutterFlowTheme.of(context)

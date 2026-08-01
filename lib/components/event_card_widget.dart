@@ -285,8 +285,9 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
                             widget.homeTeamLogoUrl!,
+                            width: 32.0,
                             height: 32.0,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                         ),
                         Align(
@@ -493,8 +494,9 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
                             widget.awayTeamLogoUrl!,
+                            width: 32.0,
                             height: 32.0,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                         ),
                         Align(

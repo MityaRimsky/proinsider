@@ -1,10 +1,13 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'notifications_page_model.dart';
 export 'notifications_page_model.dart';
 
@@ -28,6 +31,21 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NotificationsPageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await UserNotificationStateTable().update(
+        data: {
+          'last_seen_at': supaSerialize<DateTime>(getCurrentTimestamp),
+        },
+        matchingRows: (rows) => rows.eqOrNull(
+          'user_id',
+          currentUserUid,
+        ),
+      );
+      FFAppState().unreadNotificationsCount = 0;
+      FFAppState().update(() {});
+    });
   }
 
   @override
@@ -39,6 +57,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -112,8 +132,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                   ],
                 ),
                 Expanded(
-                  child: FutureBuilder<List<NotificationsRow>>(
-                    future: NotificationsTable().queryRows(
+                  child: FutureBuilder<List<MyNotificationsRow>>(
+                    future: MyNotificationsTable().queryRows(
                       queryFn: (q) => q,
                     ),
                     builder: (context, snapshot) {
@@ -131,7 +151,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                           ),
                         );
                       }
-                      List<NotificationsRow> listViewNotificationsRowList =
+                      List<MyNotificationsRow> listViewMyNotificationsRowList =
                           snapshot.data!;
 
                       return ListView.separated(
@@ -143,18 +163,19 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                         ),
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        itemCount: listViewNotificationsRowList.length,
+                        itemCount: listViewMyNotificationsRowList.length,
                         separatorBuilder: (_, __) => SizedBox(height: 24.0),
                         itemBuilder: (context, listViewIndex) {
-                          final listViewNotificationsRow =
-                              listViewNotificationsRowList[listViewIndex];
+                          final listViewMyNotificationsRow =
+                              listViewMyNotificationsRowList[listViewIndex];
                           return InkWell(
                             splashColor: Colors.transparent,
                             focusColor: Colors.transparent,
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              if (listViewNotificationsRow.planType == 'live') {
+                              if (listViewMyNotificationsRow.planType ==
+                                  'live') {
                                 context.pushNamed(
                                   LivePageWidget.routeName,
                                   extra: <String, dynamic>{
@@ -171,7 +192,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                   ForecastDetailsPageWidget.routeName,
                                   queryParameters: {
                                     'cardId': serializeParam(
-                                      listViewNotificationsRow.forecastCardId,
+                                      listViewMyNotificationsRow.forecastCardId,
                                       ParamType.int,
                                     ),
                                   }.withoutNulls,
@@ -195,11 +216,11 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                   height: 48.0,
                                   decoration: BoxDecoration(
                                     color: () {
-                                      if (listViewNotificationsRow.planType ==
+                                      if (listViewMyNotificationsRow.planType ==
                                           'premium') {
                                         return FlutterFlowTheme.of(context)
                                             .primary;
-                                      } else if (listViewNotificationsRow
+                                      } else if (listViewMyNotificationsRow
                                               .planType ==
                                           'gold') {
                                         return FlutterFlowTheme.of(context)
@@ -213,7 +234,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                   ),
                                   child: Builder(
                                     builder: (context) {
-                                      if (listViewNotificationsRow.planType ==
+                                      if (listViewMyNotificationsRow.planType ==
                                           'premium') {
                                         return Icon(
                                           FFIcons.kstar,
@@ -221,7 +242,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                               .whiteText,
                                           size: 24.0,
                                         );
-                                      } else if (listViewNotificationsRow
+                                      } else if (listViewMyNotificationsRow
                                               .planType ==
                                           'gold') {
                                         return Icon(
@@ -260,7 +281,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                listViewNotificationsRow.title,
+                                                listViewMyNotificationsRow
+                                                    .title!,
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .labelMedium
@@ -295,8 +317,11 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                                     ),
                                               ),
                                               Text(
-                                                listViewNotificationsRow
-                                                    .message,
+                                                functions.buildNotificationMessage(
+                                                    listViewMyNotificationsRow
+                                                        .matchTime,
+                                                    listViewMyNotificationsRow
+                                                        .coefficient),
                                                 maxLines: 1,
                                                 style: FlutterFlowTheme.of(
                                                         context)
@@ -337,7 +362,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                       ),
                                       Text(
                                         functions.formatNotificationDate(
-                                            listViewNotificationsRow.createdAt),
+                                            listViewMyNotificationsRow
+                                                .createdAt!),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(

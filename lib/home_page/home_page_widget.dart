@@ -10,8 +10,10 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 
@@ -34,6 +36,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomePageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.unreadNotificationsCount =
+          await MyUnreadNotificationsCountTable().queryRows(
+        queryFn: (q) => q,
+      );
+      FFAppState().unreadNotificationsCount =
+          _model.unreadNotificationsCount!.firstOrNull!.unreadCount!;
+      safeSetState(() {});
+    });
   }
 
   @override
@@ -45,6 +58,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -139,40 +154,152 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     ),
                                   ),
                                   if (loggedIn == true)
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed(
-                                          NotificationsPageWidget.routeName,
-                                          extra: <String, dynamic>{
-                                            '__transition_info__':
-                                                TransitionInfo(
-                                              hasTransition: true,
-                                              transitionType: PageTransitionType
-                                                  .rightToLeft,
-                                              duration:
-                                                  Duration(milliseconds: 100),
+                                    FutureBuilder<
+                                        List<MyUnreadNotificationsCountRow>>(
+                                      future: MyUnreadNotificationsCountTable()
+                                          .querySingleRow(
+                                        queryFn: (q) => q,
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 32.0,
+                                              height: 32.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                                ),
+                                              ),
                                             ),
+                                          );
+                                        }
+                                        List<MyUnreadNotificationsCountRow>
+                                            stackMyUnreadNotificationsCountRowList =
+                                            snapshot.data!;
+
+                                        final stackMyUnreadNotificationsCountRow =
+                                            stackMyUnreadNotificationsCountRowList
+                                                    .isNotEmpty
+                                                ? stackMyUnreadNotificationsCountRowList
+                                                    .first
+                                                : null;
+
+                                        return InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              NotificationsPageWidget.routeName,
+                                              extra: <String, dynamic>{
+                                                '__transition_info__':
+                                                    TransitionInfo(
+                                                  hasTransition: true,
+                                                  transitionType:
+                                                      PageTransitionType
+                                                          .rightToLeft,
+                                                  duration: Duration(
+                                                      milliseconds: 150),
+                                                ),
+                                              },
+                                            );
                                           },
+                                          child: Container(
+                                            width: 48.0,
+                                            height: 48.0,
+                                            child: Stack(
+                                              alignment: AlignmentDirectional(
+                                                  0.0, 0.0),
+                                              children: [
+                                                Icon(
+                                                  FFIcons.knotification,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryText,
+                                                  size: 24.0,
+                                                ),
+                                                if (stackMyUnreadNotificationsCountRow!
+                                                        .unreadCount! >
+                                                    0)
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.7, -0.7),
+                                                    child: Container(
+                                                      constraints:
+                                                          BoxConstraints(
+                                                        minWidth: 20.0,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .accent4,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(24.0),
+                                                        shape:
+                                                            BoxShape.rectangle,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    4.0,
+                                                                    2.0,
+                                                                    4.0,
+                                                                    2.0),
+                                                        child: Text(
+                                                          stackMyUnreadNotificationsCountRow
+                                                              .unreadCount!
+                                                              .toString(),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .labelSmall
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .roboto(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelSmall
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelSmall
+                                                                      .fontStyle,
+                                                                ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .whiteText,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelSmall
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelSmall
+                                                                    .fontStyle,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
                                         );
                                       },
-                                      child: Container(
-                                        width: 48.0,
-                                        height: 48.0,
-                                        decoration: BoxDecoration(
-                                          color: Colors.transparent,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          FFIcons.knotification,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryText,
-                                          size: 24.0,
-                                        ),
-                                      ),
                                     ),
                                   InkWell(
                                     splashColor: Colors.transparent,
@@ -892,6 +1019,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             startTime:
                                                 listViewForecastCardsFeedViewRow
                                                     .startTime!,
+                                            hasAccess:
+                                                listViewForecastCardsFeedViewRow
+                                                    .hasAccess!,
+                                            canPurchase:
+                                                listViewForecastCardsFeedViewRow
+                                                    .canPurchase!,
+                                            subscriptionPlanId:
+                                                listViewForecastCardsFeedViewRow
+                                                    .subscriptionPlanId!,
                                           );
                                         } else {
                                           return PremiumWidget(
@@ -909,6 +1045,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             startTime:
                                                 listViewForecastCardsFeedViewRow
                                                     .startTime!,
+                                            hasAccess:
+                                                listViewForecastCardsFeedViewRow
+                                                    .hasAccess!,
+                                            canPurchase:
+                                                listViewForecastCardsFeedViewRow
+                                                    .canPurchase!,
+                                            subscriptionPlanId:
+                                                listViewForecastCardsFeedViewRow
+                                                    .subscriptionPlanId!,
                                           );
                                         }
                                       },

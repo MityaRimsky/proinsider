@@ -10,9 +10,11 @@ class LiveSubscriptionHeaderWidget extends StatefulWidget {
   const LiveSubscriptionHeaderWidget({
     super.key,
     required this.subtitle,
+    required this.hasAccess,
   });
 
   final String? subtitle;
+  final bool? hasAccess;
 
   @override
   State<LiveSubscriptionHeaderWidget> createState() =>
@@ -75,7 +77,7 @@ class _LiveSubscriptionHeaderWidgetState
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 56.0, 16.0, 64.0),
+        padding: EdgeInsetsDirectional.fromSTEB(16.0, 56.0, 16.0, 48.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -146,26 +148,93 @@ class _LiveSubscriptionHeaderWidgetState
               alignment: AlignmentDirectional(0.0, 0.0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                child: Text(
-                  valueOrDefault<String>(
-                    widget.subtitle,
-                    'Более 85% проходных прогнозов ',
-                  ),
-                  style: FlutterFlowTheme.of(context).labelSmall.override(
-                        font: GoogleFonts.roboto(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .labelSmall
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).labelSmall.fontStyle,
+                child: Builder(
+                  builder: (context) {
+                    if (widget.hasAccess == false) {
+                      return Text(
+                        valueOrDefault<String>(
+                          widget.subtitle,
+                          'Более 85% проходных прогнозов ',
                         ),
-                        color: FlutterFlowTheme.of(context).whiteText,
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            FlutterFlowTheme.of(context).labelSmall.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).labelSmall.fontStyle,
-                      ),
+                        style: FlutterFlowTheme.of(context).labelSmall.override(
+                              font: GoogleFonts.roboto(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .fontStyle,
+                              ),
+                              color: FlutterFlowTheme.of(context).whiteText,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .labelSmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .labelSmall
+                                  .fontStyle,
+                            ),
+                      );
+                    } else {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Color(0x5BFFFFFF),
+                          borderRadius: BorderRadius.circular(24.0),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).whiteText,
+                            width: 0.5,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 4.0, 8.0, 4.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 20.0,
+                                height: 20.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.check_rounded,
+                                  color: FlutterFlowTheme.of(context).whiteText,
+                                  size: 16.0,
+                                ),
+                              ),
+                              Text(
+                                'Активен',
+                                style: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .override(
+                                      font: GoogleFonts.roboto(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .whiteText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .fontStyle,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 8.0)),
+                          ),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ),

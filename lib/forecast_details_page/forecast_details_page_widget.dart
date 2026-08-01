@@ -3,6 +3,7 @@ import '/components/analytics_widget.dart';
 import '/components/event_card_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -258,14 +259,11 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    valueOrDefault<String>(
-                                      forecastDetailsPageForecastCardsDetailsViewRow
-                                                  ?.resultStatus ==
-                                              'pending'
-                                          ? 'Сегодня'
-                                          : 'Завершен',
-                                      'Сегодня',
-                                    ),
+                                    functions.getForecastStatus(
+                                        forecastDetailsPageForecastCardsDetailsViewRow!
+                                            .startTime!,
+                                        forecastDetailsPageForecastCardsDetailsViewRow
+                                            .resultStatus!),
                                     style: FlutterFlowTheme.of(context)
                                         .bodySmall
                                         .override(
@@ -294,7 +292,7 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                   Text(
                                     dateTimeFormat(
                                         "Hm",
-                                        forecastDetailsPageForecastCardsDetailsViewRow!
+                                        forecastDetailsPageForecastCardsDetailsViewRow
                                             .startTime!),
                                     style: FlutterFlowTheme.of(context)
                                         .headlineLarge

@@ -250,6 +250,15 @@ class _FavoritePageWidgetState extends State<FavoritePageWidget> {
                                           startTime:
                                               listViewForecastCardsFeedViewRow
                                                   .startTime!,
+                                          hasAccess:
+                                              listViewForecastCardsFeedViewRow
+                                                  .hasAccess!,
+                                          canPurchase:
+                                              listViewForecastCardsFeedViewRow
+                                                  .canPurchase!,
+                                          subscriptionPlanId:
+                                              listViewForecastCardsFeedViewRow
+                                                  .subscriptionPlanId!,
                                         );
                                       } else {
                                         return PremiumWidget(
@@ -267,6 +276,15 @@ class _FavoritePageWidgetState extends State<FavoritePageWidget> {
                                           startTime:
                                               listViewForecastCardsFeedViewRow
                                                   .startTime!,
+                                          hasAccess:
+                                              listViewForecastCardsFeedViewRow
+                                                  .hasAccess!,
+                                          canPurchase:
+                                              listViewForecastCardsFeedViewRow
+                                                  .canPurchase!,
+                                          subscriptionPlanId:
+                                              listViewForecastCardsFeedViewRow
+                                                  .subscriptionPlanId!,
                                         );
                                       }
                                     },

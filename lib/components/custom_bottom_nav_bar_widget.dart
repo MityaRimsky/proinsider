@@ -1,4 +1,5 @@
 import '/auth/base_auth_user_provider.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
@@ -125,7 +126,7 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.pushNamed(
+                  context.goNamed(
                     SubscriptionsPageWidget.routeName,
                     extra: <String, dynamic>{
                       '__transition_info__': TransitionInfo(
@@ -188,16 +189,44 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.pushNamed(
-                    LivePageWidget.routeName,
-                    extra: <String, dynamic>{
-                      '__transition_info__': TransitionInfo(
-                        hasTransition: true,
-                        transitionType: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 0),
-                      ),
-                    },
+                  _model.hasAccessLive =
+                      await SubscriptionPlanDetailsViewTable().queryRows(
+                    queryFn: (q) => q.eqOrNull(
+                      'name',
+                      'live',
+                    ),
                   );
+                  if (_model.hasAccessLive?.firstOrNull?.hasAccess == true) {
+                    context.pushNamed(
+                      LivePageWidget.routeName,
+                      extra: <String, dynamic>{
+                        '__transition_info__': TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 0),
+                        ),
+                      },
+                    );
+                  } else {
+                    context.pushNamed(
+                      SubscriptionDetailsPageWidget.routeName,
+                      queryParameters: {
+                        'planId': serializeParam(
+                          _model.hasAccessLive?.firstOrNull?.planId,
+                          ParamType.int,
+                        ),
+                      }.withoutNulls,
+                      extra: <String, dynamic>{
+                        '__transition_info__': TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.rightToLeft,
+                          duration: Duration(milliseconds: 150),
+                        ),
+                      },
+                    );
+                  }
+
+                  safeSetState(() {});
                 },
                 child: Container(
                   decoration: BoxDecoration(),
@@ -251,7 +280,7 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.pushNamed(
+                  context.goNamed(
                     LearningPageWidget.routeName,
                     extra: <String, dynamic>{
                       '__transition_info__': TransitionInfo(
@@ -315,7 +344,7 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                 highlightColor: Colors.transparent,
                 onTap: () async {
                   if (loggedIn == true) {
-                    context.pushNamed(
+                    context.goNamed(
                       ProfilePageWidget.routeName,
                       extra: <String, dynamic>{
                         '__transition_info__': TransitionInfo(
@@ -326,7 +355,7 @@ class _CustomBottomNavBarWidgetState extends State<CustomBottomNavBarWidget> {
                       },
                     );
                   } else {
-                    context.pushNamed(
+                    context.goNamed(
                       GuestProfilePageWidget.routeName,
                       extra: <String, dynamic>{
                         '__transition_info__': TransitionInfo(

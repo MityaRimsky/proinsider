@@ -47,4 +47,7 @@ class SubscriptionPlansRow extends SupabaseDataRow {
 
   DateTime get updatedAt => getField<DateTime>('updated_at')!;
   set updatedAt(DateTime value) => setField<DateTime>('updated_at', value);
+
+  String? get featureBonus => getField<String>('feature_bonus');
+  set featureBonus(String? value) => setField<String>('feature_bonus', value);
 }

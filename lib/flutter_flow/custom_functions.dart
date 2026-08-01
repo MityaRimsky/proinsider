@@ -110,3 +110,188 @@ bool isEmailValid(String? email) {
 
   return regex.hasMatch(email.trim());
 }
+
+String formatSubscriptionRemaining(
+  String? planName,
+  int? remainingForecasts,
+  DateTime? expiresAt,
+  bool? hasAccess,
+) {
+  if (hasAccess != true) {
+    return 'Выберите тариф';
+  }
+
+  final normalizedName = planName?.trim().toLowerCase();
+
+  if (normalizedName == 'premium' || normalizedName == 'gold') {
+    final int count = (remainingForecasts ?? 0).clamp(0, 999999).toInt();
+
+    final int mod10 = count % 10;
+    final int mod100 = count % 100;
+
+    final bool singular = mod10 == 1 && mod100 != 11;
+
+    String word;
+
+    if (singular) {
+      word = 'прогноз';
+    } else if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+      word = 'прогноза';
+    } else {
+      word = 'прогнозов';
+    }
+
+    final String verb = singular ? 'Остался' : 'Осталось';
+
+    return '$verb $count $word';
+  }
+
+  if (normalizedName == 'live') {
+    if (expiresAt == null) {
+      return 'Срок действия не указан';
+    }
+
+    final DateTime date = expiresAt.toLocal();
+    final DateTime now = DateTime.now();
+
+    const months = <String>[
+      '',
+      'января',
+      'февраля',
+      'марта',
+      'апреля',
+      'мая',
+      'июня',
+      'июля',
+      'августа',
+      'сентября',
+      'октября',
+      'ноября',
+      'декабря',
+    ];
+
+    if (date.year == now.year) {
+      return 'Действует до ${date.day} ${months[date.month]}';
+    }
+
+    return 'Действует до ${date.day} ${months[date.month]} ${date.year}';
+  }
+
+  return 'Выберите тариф';
+}
+
+String notificationBadgeText(int notificationCount) {
+  if (notificationCount > 99) {
+    return '99+';
+  }
+
+  return notificationCount.toString();
+}
+
+String? formatForecastStatus(
+  bool? hasAccess,
+  int? remainingForecasts,
+) {
+  if (hasAccess != true) {
+    return 'Выберите тариф';
+  }
+
+  final int count = (remainingForecasts ?? 0).clamp(0, 999999).toInt();
+
+  final int mod10 = count % 10;
+  final int mod100 = count % 100;
+
+  final bool singular = mod10 == 1 && mod100 != 11;
+
+  String word;
+
+  if (singular) {
+    word = 'прогноз';
+  } else if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+    word = 'прогноза';
+  } else {
+    word = 'прогнозов';
+  }
+
+  final String verb = singular ? 'Остался' : 'Осталось';
+
+  return '$verb $count $word';
+}
+
+String? formatSubscriptionStatus(
+  bool? hasAccess,
+  DateTime? expiresAt,
+) {
+  if (hasAccess != true) {
+    return 'Выберите тариф';
+  }
+
+  if (expiresAt == null) {
+    return 'Срок действия не указан';
+  }
+
+  final DateTime date = expiresAt.toLocal();
+  final DateTime now = DateTime.now();
+
+  const months = <String>[
+    '',
+    'января',
+    'февраля',
+    'марта',
+    'апреля',
+    'мая',
+    'июня',
+    'июля',
+    'августа',
+    'сентября',
+    'октября',
+    'ноября',
+    'декабря',
+  ];
+
+  if (date.year == now.year) {
+    return 'Действует до ${date.day} ${months[date.month]}';
+  }
+
+  return 'Действует до ${date.day} ${months[date.month]} ${date.year}';
+}
+
+String getForecastStatus(
+  DateTime startTime,
+  String resultStatus,
+) {
+  final now = DateTime.now();
+  final localStartTime = startTime.toLocal();
+
+  if (resultStatus != 'pending') {
+    return 'Завершён';
+  }
+
+  if (!localStartTime.isAfter(now)) {
+    return 'Ожидаем результат';
+  }
+
+  final isToday = localStartTime.year == now.year &&
+      localStartTime.month == now.month &&
+      localStartTime.day == now.day;
+
+  return isToday ? 'Сегодня' : 'Скоро';
+}
+
+String buildNotificationMessage(
+  DateTime? matchTime,
+  double? coefficient,
+) {
+  if (matchTime == null) {
+    return '';
+  }
+
+  final localTime = matchTime.toLocal();
+
+  final hours = localTime.hour.toString().padLeft(2, '0');
+  final minutes = localTime.minute.toString().padLeft(2, '0');
+
+  final coef = (coefficient ?? 0).toStringAsFixed(2);
+
+  return '$hours:$minutes | Общий КФ: $coef';
+}

@@ -92,100 +92,117 @@ class _LivePageWidgetState extends State<LivePageWidget> {
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 0.0, 8.0, 0.0),
-                          child: Builder(
-                            builder: (context) {
-                              if (_model.liveForecasts == 'show') {
-                                return FutureBuilder<List<LivePredictionsRow>>(
-                                  future: LivePredictionsTable().queryRows(
-                                    queryFn: (q) => q.order('updated_at'),
-                                  ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 32.0,
-                                          height: 32.0,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<LivePredictionsRow>
-                                        listViewLivePredictionsRowList =
-                                        snapshot.data!;
-
-                                    return ListView.separated(
-                                      padding: EdgeInsets.fromLTRB(
-                                        0,
-                                        0,
-                                        0,
-                                        16.0,
+                          child: FutureBuilder<List<MyLivePredictionsRow>>(
+                            future: MyLivePredictionsTable().queryRows(
+                              queryFn: (q) => q,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 32.0,
+                                    height: 32.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
                                       ),
-                                      reverse: true,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      itemCount:
-                                          listViewLivePredictionsRowList.length,
-                                      separatorBuilder: (_, __) =>
-                                          SizedBox(height: 8.0),
-                                      itemBuilder: (context, listViewIndex) {
-                                        final listViewLivePredictionsRow =
-                                            listViewLivePredictionsRowList[
-                                                listViewIndex];
-                                        return Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 16.0, 0.0),
-                                          child: Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(24.0),
-                                                topRight: Radius.circular(24.0),
-                                                bottomRight:
-                                                    Radius.circular(24.0),
-                                              ),
-                                            ),
-                                            child: Padding(
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<MyLivePredictionsRow>
+                                  conditionalBuilderMyLivePredictionsRowList =
+                                  snapshot.data!;
+
+                              return Builder(
+                                builder: (context) {
+                                  if (conditionalBuilderMyLivePredictionsRowList
+                                      .isNotEmpty) {
+                                    return Builder(
+                                      builder: (context) {
+                                        final livePredictions =
+                                            conditionalBuilderMyLivePredictionsRowList
+                                                .toList();
+
+                                        return ListView.separated(
+                                          padding: EdgeInsets.fromLTRB(
+                                            0,
+                                            0,
+                                            0,
+                                            16.0,
+                                          ),
+                                          reverse: true,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: livePredictions.length,
+                                          separatorBuilder: (_, __) =>
+                                              SizedBox(height: 8.0),
+                                          itemBuilder:
+                                              (context, livePredictionsIndex) {
+                                            final livePredictionsItem =
+                                                livePredictions[
+                                                    livePredictionsIndex];
+                                            return Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      8.0, 8.0, 8.0, 16.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    child: Image.network(
-                                                      listViewLivePredictionsRow
-                                                          .imageUrl!,
-                                                      width: double.infinity,
-                                                      fit: BoxFit.cover,
-                                                    ),
+                                                      0.0, 0.0, 16.0, 0.0),
+                                              child: Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryBackground,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(24.0),
+                                                    topRight:
+                                                        Radius.circular(24.0),
+                                                    bottomRight:
+                                                        Radius.circular(24.0),
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(8.0, 16.0,
-                                                                8.0, 0.0),
-                                                    child: Text(
-                                                      listViewLivePredictionsRow
-                                                          .predictionText,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 8.0, 8.0, 16.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                        child: Image.network(
+                                                          livePredictionsItem
+                                                              .imageUrl!,
+                                                          width:
+                                                              double.infinity,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    8.0,
+                                                                    16.0,
+                                                                    8.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            livePredictionsItem
+                                                                .predictionText,
+                                                            'Прогноз',
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
                                                               .bodyMedium
                                                               .override(
                                                                 font:
@@ -211,29 +228,28 @@ class _LivePageWidgetState extends State<LivePageWidget> {
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                               ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            1.0, 1.0),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  8.0,
-                                                                  8.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        functions.formatLiveDateTime(
-                                                            listViewLivePredictionsRow
-                                                                .publishedAt),
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                1.0, 1.0),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      8.0,
+                                                                      8.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            functions.formatLiveDateTime(
+                                                                livePredictionsItem
+                                                                    .publishedAt!),
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .bodyMedium
                                                                 .override(
                                                                   font: GoogleFonts
@@ -261,59 +277,64 @@ class _LivePageWidgetState extends State<LivePageWidget> {
                                                                       .bodyMedium
                                                                       .fontStyle,
                                                                 ),
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
-                                          ),
+                                            );
+                                          },
                                         );
                                       },
                                     );
-                                  },
-                                );
-                              } else {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      FFIcons.kclock,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 96.0,
-                                    ),
-                                    Text(
-                                      'Live-прогнозы скоро появятся  \nСледите за обновлениями ',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            font: GoogleFonts.roboto(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .fontStyle,
-                                            ),
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ].divide(SizedBox(height: 24.0)),
-                                );
-                              }
+                                  } else {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          FFIcons.kclock,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 96.0,
+                                        ),
+                                        Text(
+                                          'Live-прогнозы скоро появятся  \nСледите за обновлениями ',
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                font: GoogleFonts.roboto(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .fontStyle,
+                                                ),
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ].divide(SizedBox(height: 24.0)),
+                                    );
+                                  }
+                                },
+                              );
                             },
                           ),
                         ),

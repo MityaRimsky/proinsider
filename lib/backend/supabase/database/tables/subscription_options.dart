@@ -44,4 +44,7 @@ class SubscriptionOptionsRow extends SupabaseDataRow {
 
   int get optionOrder => getField<int>('option_order')!;
   set optionOrder(int value) => setField<int>('option_order', value);
+
+  bool get bonusUntilWin => getField<bool>('bonus_until_win')!;
+  set bonusUntilWin(bool value) => setField<bool>('bonus_until_win', value);
 }

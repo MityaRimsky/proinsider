@@ -1,3 +1,4 @@
+import '/components/forecast_unavailable_sheet_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
@@ -13,12 +14,18 @@ class GoldWidget extends StatefulWidget {
     required this.totalOdds,
     required this.startTime,
     required this.resultStatus,
+    required this.hasAccess,
+    required this.canPurchase,
+    required this.subscriptionPlanId,
   });
 
   final int? cardId;
   final double? totalOdds;
   final DateTime? startTime;
   final String? resultStatus;
+  final bool? hasAccess;
+  final bool? canPurchase;
+  final int? subscriptionPlanId;
 
   @override
   State<GoldWidget> createState() => _GoldWidgetState();
@@ -54,22 +61,57 @@ class _GoldWidgetState extends State<GoldWidget> {
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () async {
-        context.pushNamed(
-          ForecastDetailsPageWidget.routeName,
-          queryParameters: {
-            'cardId': serializeParam(
-              widget.cardId,
-              ParamType.int,
-            ),
-          }.withoutNulls,
-          extra: <String, dynamic>{
-            '__transition_info__': TransitionInfo(
-              hasTransition: true,
-              transitionType: PageTransitionType.rightToLeft,
-              duration: Duration(milliseconds: 150),
-            ),
-          },
-        );
+        if (widget.hasAccess == true) {
+          context.pushNamed(
+            ForecastDetailsPageWidget.routeName,
+            queryParameters: {
+              'cardId': serializeParam(
+                widget.cardId,
+                ParamType.int,
+              ),
+            }.withoutNulls,
+            extra: <String, dynamic>{
+              '__transition_info__': TransitionInfo(
+                hasTransition: true,
+                transitionType: PageTransitionType.rightToLeft,
+                duration: Duration(milliseconds: 150),
+              ),
+            },
+          );
+        } else {
+          if (widget.canPurchase == true) {
+            context.pushNamed(
+              SubscriptionDetailsPageWidget.routeName,
+              queryParameters: {
+                'planId': serializeParam(
+                  widget.subscriptionPlanId,
+                  ParamType.int,
+                ),
+              }.withoutNulls,
+              extra: <String, dynamic>{
+                '__transition_info__': TransitionInfo(
+                  hasTransition: true,
+                  transitionType: PageTransitionType.rightToLeft,
+                  duration: Duration(milliseconds: 150),
+                ),
+              },
+            );
+          } else {
+            await showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              barrierColor: Color(0x52000000),
+              useSafeArea: true,
+              context: context,
+              builder: (context) {
+                return Padding(
+                  padding: MediaQuery.viewInsetsOf(context),
+                  child: ForecastUnavailableSheetWidget(),
+                );
+              },
+            ).then((value) => safeSetState(() {}));
+          }
+        }
       },
       child: Container(
         width: double.infinity,
@@ -337,8 +379,25 @@ class _GoldWidgetState extends State<GoldWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      if ((widget.hasAccess == false) &&
+                          (widget.canPurchase == false))
+                        Icon(
+                          FFIcons.klock,
+                          color: FlutterFlowTheme.of(context).secondary,
+                          size: 24.0,
+                        ),
                       Text(
-                        'Смотреть прогноз',
+                        () {
+                          if ((widget.hasAccess == false) ||
+                              (widget.canPurchase == true)) {
+                            return 'Открыть прогноз';
+                          } else if ((widget.hasAccess == false) &&
+                              (widget.canPurchase == false)) {
+                            return 'Ожидаем результат';
+                          } else {
+                            return 'Смотреть прогноз';
+                          }
+                        }(),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.roboto(
                                 fontWeight: FlutterFlowTheme.of(context)
@@ -358,7 +417,7 @@ class _GoldWidgetState extends State<GoldWidget> {
                                   .fontStyle,
                             ),
                       ),
-                    ].divide(SizedBox(width: 4.0)),
+                    ].divide(SizedBox(width: 8.0)),
                   ),
                 ),
               ),

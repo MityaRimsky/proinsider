@@ -247,18 +247,34 @@ dynamic deserializeParam<T>(
             return TeamsRow(data);
           case LivePredictionsRow:
             return LivePredictionsRow(data);
+          case UserForecastBalancesRow:
+            return UserForecastBalancesRow(data);
+          case MyNotificationsRow:
+            return MyNotificationsRow(data);
           case NotificationsRow:
             return NotificationsRow(data);
           case LearningBettingRow:
             return LearningBettingRow(data);
+          case UserLiveSubscriptionsRow:
+            return UserLiveSubscriptionsRow(data);
+          case UserForecastCreditsRow:
+            return UserForecastCreditsRow(data);
+          case MyUnreadNotificationsCountRow:
+            return MyUnreadNotificationsCountRow(data);
           case ForecastCardsRow:
             return ForecastCardsRow(data);
           case LearningBasicsRow:
             return LearningBasicsRow(data);
+          case PaymentsRow:
+            return PaymentsRow(data);
+          case UserForecastAssignmentsRow:
+            return UserForecastAssignmentsRow(data);
           case BookmakerBonusesRow:
             return BookmakerBonusesRow(data);
           case SubscriptionCardsViewRow:
             return SubscriptionCardsViewRow(data);
+          case WebhookEventsRow:
+            return WebhookEventsRow(data);
           case SubscriptionOptionsRow:
             return SubscriptionOptionsRow(data);
           case SubscriptionPlanDetailsViewRow:
@@ -269,8 +285,16 @@ dynamic deserializeParam<T>(
             return SubscriptionPlansRow(data);
           case ForecastCardsFeedViewRow:
             return ForecastCardsFeedViewRow(data);
+          case UserForecastBonusesRow:
+            return UserForecastBonusesRow(data);
           case LearningTipsRow:
             return LearningTipsRow(data);
+          case MyLivePredictionsRow:
+            return MyLivePredictionsRow(data);
+          case UserNotificationStateRow:
+            return UserNotificationStateRow(data);
+          case UserLivePredictionAssignmentsRow:
+            return UserLivePredictionAssignmentsRow(data);
           default:
             return null;
         }

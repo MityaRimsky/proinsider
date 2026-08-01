@@ -77,4 +77,14 @@ class ForecastCardsFeedViewRow extends SupabaseDataRow {
   String? get awayTeamLogoUrl => getField<String>('away_team_logo_url');
   set awayTeamLogoUrl(String? value) =>
       setField<String>('away_team_logo_url', value);
+
+  bool? get hasAccess => getField<bool>('has_access');
+  set hasAccess(bool? value) => setField<bool>('has_access', value);
+
+  bool? get canPurchase => getField<bool>('can_purchase');
+  set canPurchase(bool? value) => setField<bool>('can_purchase', value);
+
+  int? get subscriptionPlanId => getField<int>('subscription_plan_id');
+  set subscriptionPlanId(int? value) =>
+      setField<int>('subscription_plan_id', value);
 }

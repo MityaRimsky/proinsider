@@ -57,4 +57,34 @@ class SubscriptionPlanDetailsViewRow extends SupabaseDataRow {
 
   double? get option2Price => getField<double>('option2_price');
   set option2Price(double? value) => setField<double>('option2_price', value);
+
+  int? get remainingForecasts => getField<int>('remaining_forecasts');
+  set remainingForecasts(int? value) =>
+      setField<int>('remaining_forecasts', value);
+
+  DateTime? get expiresAt => getField<DateTime>('expires_at');
+  set expiresAt(DateTime? value) => setField<DateTime>('expires_at', value);
+
+  bool? get hasAccess => getField<bool>('has_access');
+  set hasAccess(bool? value) => setField<bool>('has_access', value);
+
+  String? get liveStatus => getField<String>('live_status');
+  set liveStatus(String? value) => setField<String>('live_status', value);
+
+  String? get featureBonus => getField<String>('feature_bonus');
+  set featureBonus(String? value) => setField<String>('feature_bonus', value);
+
+  int? get currentOptionId => getField<int>('current_option_id');
+  set currentOptionId(int? value) => setField<int>('current_option_id', value);
+
+  int? get currentOption => getField<int>('current_option');
+  set currentOption(int? value) => setField<int>('current_option', value);
+
+  String? get currentOptionName => getField<String>('current_option_name');
+  set currentOptionName(String? value) =>
+      setField<String>('current_option_name', value);
+
+  double? get currentOptionPrice => getField<double>('current_option_price');
+  set currentOptionPrice(double? value) =>
+      setField<double>('current_option_price', value);
 }

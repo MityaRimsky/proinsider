@@ -88,6 +88,12 @@ class FFAppState extends ChangeNotifier {
   set pendingPlanId(int value) {
     _pendingPlanId = value;
   }
+
+  int _unreadNotificationsCount = 0;
+  int get unreadNotificationsCount => _unreadNotificationsCount;
+  set unreadNotificationsCount(int value) {
+    _unreadNotificationsCount = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

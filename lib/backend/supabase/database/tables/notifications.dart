@@ -21,9 +21,6 @@ class NotificationsRow extends SupabaseDataRow {
   String get title => getField<String>('title')!;
   set title(String value) => setField<String>('title', value);
 
-  String get message => getField<String>('message')!;
-  set message(String value) => setField<String>('message', value);
-
   String get planType => getField<String>('plan_type')!;
   set planType(String value) => setField<String>('plan_type', value);
 
@@ -32,4 +29,10 @@ class NotificationsRow extends SupabaseDataRow {
 
   DateTime get createdAt => getField<DateTime>('created_at')!;
   set createdAt(DateTime value) => setField<DateTime>('created_at', value);
+
+  DateTime? get matchTime => getField<DateTime>('match_time');
+  set matchTime(DateTime? value) => setField<DateTime>('match_time', value);
+
+  double get coefficient => getField<double>('coefficient')!;
+  set coefficient(double value) => setField<double>('coefficient', value);
 }

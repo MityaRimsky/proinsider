@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -205,7 +206,7 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                   ),
                   Container(
                     constraints: BoxConstraints(
-                      maxWidth: 100.0,
+                      maxWidth: 80.0,
                     ),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).whiteText,
@@ -219,40 +220,9 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 4.0, 0.0, 4.0),
-                            child: Text(
-                              valueOrDefault<String>(
-                                widget.betMarket,
-                                'П1',
-                              ),
-                              maxLines: 1,
-                              style: FlutterFlowTheme.of(context)
-                                  .labelSmall
-                                  .override(
-                                    font: GoogleFonts.roboto(
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelSmall
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .darkBrightText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelSmall
-                                        .fontStyle,
-                                  ),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 4.0, 0.0, 4.0),
                             child: Text(
-                              '| КФ:',
+                              'КФ:',
                               maxLines: 1,
                               style: FlutterFlowTheme.of(context)
                                   .labelSmall
@@ -338,8 +308,9 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
                               widget.homeTeamLogoUrl!,
+                              width: 48.0,
                               height: 48.0,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                             ),
                           ),
                           Align(
@@ -381,9 +352,8 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          widget.resultStatus == 'pending'
-                              ? 'Сегодня'
-                              : 'Зевершен',
+                          functions.getForecastStatus(
+                              widget.startTime!, widget.resultStatus!),
                           style:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     font: GoogleFonts.roboto(
@@ -463,8 +433,9 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
                               widget.awayTeamLogoUrl!,
+                              width: 48.0,
                               height: 48.0,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                             ),
                           ),
                           Align(
@@ -502,7 +473,7 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                         ].divide(SizedBox(height: 8.0)),
                       ),
                     ),
-                  ].divide(SizedBox(width: 32.0)),
+                  ].divide(SizedBox(width: 24.0)),
                 ),
               ),
             ],
