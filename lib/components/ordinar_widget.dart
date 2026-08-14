@@ -11,18 +11,18 @@ class OrdinarWidget extends StatefulWidget {
   const OrdinarWidget({
     super.key,
     required this.cardId,
-    required this.startTime,
+    this.startTime,
     required this.resultStatus,
-    required this.eventLeague,
-    required this.betMarket,
-    required this.eventOdds,
+    this.eventLeague,
+    this.betMarket,
+    this.eventOdds,
     required this.homeTeamId,
     required this.homeTeamName,
-    required this.homeTeamLogoUrl,
+    this.homeTeamLogoUrl,
     required this.awayTeamId,
     required this.awayTeamName,
-    required this.awayTeamLogoUrl,
-    required this.eventSport,
+    this.awayTeamLogoUrl,
+    this.eventSport,
   });
 
   final int? cardId;
@@ -307,7 +307,10 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
-                              widget.homeTeamLogoUrl!,
+                              valueOrDefault<String>(
+                                widget.homeTeamLogoUrl,
+                                'https://proinsider.ru/storage/v1/object/public/team_images/logo_alternative.png',
+                              ),
                               width: 48.0,
                               height: 48.0,
                               fit: BoxFit.contain,
@@ -352,8 +355,11 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          functions.getForecastStatus(
-                              widget.startTime!, widget.resultStatus!),
+                          valueOrDefault<String>(
+                            functions.getForecastStatus(
+                                widget.startTime!, widget.resultStatus!),
+                            'Ожидаем результат',
+                          ),
                           style:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     font: GoogleFonts.roboto(
@@ -376,7 +382,10 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                                   ),
                         ),
                         Text(
-                          dateTimeFormat("Hm", widget.startTime),
+                          valueOrDefault<String>(
+                            dateTimeFormat("Hm", widget.startTime),
+                            '00:00',
+                          ),
                           style: FlutterFlowTheme.of(context)
                               .headlineLarge
                               .override(
@@ -399,7 +408,10 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                               ),
                         ),
                         Text(
-                          dateTimeFormat("dd/MM/yyyy", widget.startTime),
+                          valueOrDefault<String>(
+                            dateTimeFormat("dd/MM/yyyy", widget.startTime),
+                            '00/00/0000',
+                          ),
                           style: FlutterFlowTheme.of(context)
                               .headlineSmall
                               .override(
@@ -432,7 +444,10 @@ class _OrdinarWidgetState extends State<OrdinarWidget> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
-                              widget.awayTeamLogoUrl!,
+                              valueOrDefault<String>(
+                                widget.awayTeamLogoUrl,
+                                'https://proinsider.ru/storage/v1/object/public/team_images/logo_alternative.png',
+                              ),
                               width: 48.0,
                               height: 48.0,
                               fit: BoxFit.contain,

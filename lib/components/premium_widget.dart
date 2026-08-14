@@ -385,8 +385,8 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                         ),
                       Text(
                         () {
-                          if ((widget.hasAccess == false) ||
-                              (widget.resultStatus == 'pending')) {
+                          if ((widget.hasAccess == false) &&
+                              (widget.canPurchase == true)) {
                             return 'Открыть прогноз';
                           } else if ((widget.hasAccess == false) &&
                               (widget.canPurchase == false)) {

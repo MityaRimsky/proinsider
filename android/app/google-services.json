@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "348000790844",
+    "project_id": "proinsider-be532",
+    "storage_bucket": "proinsider-be532.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348000790844:android:5d5d34bf9fa638d81d5639",
+        "android_client_info": {
+          "package_name": "ru.proinsider.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2aNKZhJXfTo4Ofk1BOA0V2sPzuZGVCOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -380,7 +380,7 @@ class _GoldWidgetState extends State<GoldWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if ((widget.hasAccess == false) &&
-                          (widget.canPurchase == false))
+                          (widget.canPurchase == true))
                         Icon(
                           FFIcons.klock,
                           color: FlutterFlowTheme.of(context).secondary,
@@ -388,7 +388,7 @@ class _GoldWidgetState extends State<GoldWidget> {
                         ),
                       Text(
                         () {
-                          if ((widget.hasAccess == false) ||
+                          if ((widget.hasAccess == false) &&
                               (widget.canPurchase == true)) {
                             return 'Открыть прогноз';
                           } else if ((widget.hasAccess == false) &&

@@ -181,16 +181,16 @@ class _FavoritePageWidgetState extends State<FavoritePageWidget> {
                                                   .resultStatus!,
                                           startTime:
                                               listViewForecastCardsFeedViewRow
-                                                  .startTime!,
+                                                  .startTime,
                                           eventLeague:
                                               listViewForecastCardsFeedViewRow
-                                                  .eventLeague!,
+                                                  .eventLeague,
                                           betMarket:
                                               listViewForecastCardsFeedViewRow
-                                                  .betMarket!,
+                                                  .betMarket,
                                           eventOdds:
                                               listViewForecastCardsFeedViewRow
-                                                  .eventOdds!,
+                                                  .eventOdds,
                                           homeTeamId:
                                               listViewForecastCardsFeedViewRow
                                                   .homeTeamId!,
@@ -199,7 +199,7 @@ class _FavoritePageWidgetState extends State<FavoritePageWidget> {
                                                   .homeTeamName!,
                                           homeTeamLogoUrl:
                                               listViewForecastCardsFeedViewRow
-                                                  .homeTeamLogoUrl!,
+                                                  .homeTeamLogoUrl,
                                           awayTeamId:
                                               listViewForecastCardsFeedViewRow
                                                   .awayTeamId!,
@@ -208,10 +208,10 @@ class _FavoritePageWidgetState extends State<FavoritePageWidget> {
                                                   .awayTeamName!,
                                           awayTeamLogoUrl:
                                               listViewForecastCardsFeedViewRow
-                                                  .awayTeamLogoUrl!,
+                                                  .awayTeamLogoUrl,
                                           eventSport:
                                               listViewForecastCardsFeedViewRow
-                                                  .eventSport!,
+                                                  .eventSport,
                                         );
                                       } else if (listViewForecastCardsFeedViewRow
                                               .type ==

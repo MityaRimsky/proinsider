@@ -259,11 +259,14 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    functions.getForecastStatus(
-                                        forecastDetailsPageForecastCardsDetailsViewRow!
-                                            .startTime!,
-                                        forecastDetailsPageForecastCardsDetailsViewRow
-                                            .resultStatus!),
+                                    valueOrDefault<String>(
+                                      functions.getForecastStatus(
+                                          forecastDetailsPageForecastCardsDetailsViewRow!
+                                              .startTime!,
+                                          forecastDetailsPageForecastCardsDetailsViewRow
+                                              .resultStatus!),
+                                      'Ожидаем результат',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodySmall
                                         .override(
@@ -290,10 +293,13 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                         ),
                                   ),
                                   Text(
-                                    dateTimeFormat(
-                                        "Hm",
-                                        forecastDetailsPageForecastCardsDetailsViewRow
-                                            .startTime!),
+                                    valueOrDefault<String>(
+                                      dateTimeFormat(
+                                          "Hm",
+                                          forecastDetailsPageForecastCardsDetailsViewRow
+                                              .startTime),
+                                      '00:00',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .headlineLarge
                                         .override(
@@ -321,10 +327,13 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                         ),
                                   ),
                                   Text(
-                                    dateTimeFormat(
-                                        "dd/MM/yyyy",
-                                        forecastDetailsPageForecastCardsDetailsViewRow
-                                            .startTime!),
+                                    valueOrDefault<String>(
+                                      dateTimeFormat(
+                                          "dd/MM/yyyy",
+                                          forecastDetailsPageForecastCardsDetailsViewRow
+                                              .startTime),
+                                      '00/00/0000',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .headlineSmall
                                         .override(
@@ -607,28 +616,28 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                     cardId: listViewForecastDetailsViewRow
                                         .forecastCardId!,
                                     eventLeague:
-                                        listViewForecastDetailsViewRow.league!,
+                                        listViewForecastDetailsViewRow.league,
                                     predictionText:
                                         listViewForecastDetailsViewRow
-                                            .predictionText!,
+                                            .predictionText,
                                     eventOdds:
-                                        listViewForecastDetailsViewRow.odds!,
+                                        listViewForecastDetailsViewRow.odds,
                                     homeTeamId: listViewForecastDetailsViewRow
                                         .homeTeamId!,
                                     homeTeamName: listViewForecastDetailsViewRow
                                         .homeTeamName!,
                                     homeTeamLogoUrl:
                                         listViewForecastDetailsViewRow
-                                            .homeTeamLogoUrl!,
+                                            .homeTeamLogoUrl,
                                     awayTeamId: listViewForecastDetailsViewRow
                                         .awayTeamId!,
                                     awayTeamName: listViewForecastDetailsViewRow
                                         .awayTeamName!,
                                     awayTeamLogoUrl:
                                         listViewForecastDetailsViewRow
-                                            .awayTeamLogoUrl!,
+                                            .awayTeamLogoUrl,
                                     eventSport:
-                                        listViewForecastDetailsViewRow.sport!,
+                                        listViewForecastDetailsViewRow.sport,
                                     winnerTeamId: listViewForecastDetailsViewRow
                                         .winnerTeamId,
                                     homeScore: listViewForecastDetailsViewRow
@@ -662,11 +671,9 @@ class _ForecastDetailsPageWidgetState extends State<ForecastDetailsPageWidget> {
                                       .analyticsText,
                                   'Аналитика',
                                 ),
-                                analyticsSummary: valueOrDefault<String>(
-                                  forecastDetailsPageForecastCardsDetailsViewRow
-                                      .analyticsSummary,
-                                  'Рекомендации',
-                                ),
+                                analyticsSummary:
+                                    forecastDetailsPageForecastCardsDetailsViewRow
+                                        .analyticsSummary,
                               ),
                             ),
                         ]

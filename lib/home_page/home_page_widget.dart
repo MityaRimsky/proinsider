@@ -9,6 +9,7 @@ import '/components/premium_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,6 +47,47 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       FFAppState().unreadNotificationsCount =
           _model.unreadNotificationsCount!.firstOrNull!.unreadCount!;
       safeSetState(() {});
+      if (FFAppState().pushType == 'live') {
+        context.pushNamed(
+          LivePageWidget.routeName,
+          extra: <String, dynamic>{
+            '__transition_info__': TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.fade,
+              duration: Duration(milliseconds: 0),
+            ),
+          },
+        );
+
+        FFAppState().pushType = '';
+        safeSetState(() {});
+        FFAppState().pushCardId = 0;
+        safeSetState(() {});
+      } else {
+        if (FFAppState().pushCardId > 0) {
+          context.pushNamed(
+            ForecastDetailsPageWidget.routeName,
+            queryParameters: {
+              'cardId': serializeParam(
+                FFAppState().pushCardId,
+                ParamType.int,
+              ),
+            }.withoutNulls,
+            extra: <String, dynamic>{
+              '__transition_info__': TransitionInfo(
+                hasTransition: true,
+                transitionType: PageTransitionType.rightToLeft,
+                duration: Duration(milliseconds: 150),
+              ),
+            },
+          );
+
+          FFAppState().pushCardId = 0;
+          safeSetState(() {});
+          FFAppState().pushType = '';
+          safeSetState(() {});
+        }
+      }
     });
   }
 
@@ -356,6 +398,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   onTap: () async {
                                     _model.selectedSport = '%all%';
                                     safeSetState(() {});
+                                    safeSetState(
+                                        () => _model.requestCompleter = null);
                                   },
                                   child: Container(
                                     height: 32.0,
@@ -423,6 +467,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   onTap: () async {
                                     _model.selectedSport = '%football%';
                                     safeSetState(() {});
+                                    safeSetState(
+                                        () => _model.requestCompleter = null);
                                   },
                                   child: Container(
                                     height: 32.0,
@@ -501,6 +547,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   onTap: () async {
                                     _model.selectedSport = '%hockey%';
                                     safeSetState(() {});
+                                    safeSetState(
+                                        () => _model.requestCompleter = null);
                                   },
                                   child: Container(
                                     height: 32.0,
@@ -578,6 +626,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   onTap: () async {
                                     _model.selectedSport = '%basketball%';
                                     safeSetState(() {});
+                                    safeSetState(
+                                        () => _model.requestCompleter = null);
                                   },
                                   child: Container(
                                     height: 32.0,
@@ -656,6 +706,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   onTap: () async {
                                     _model.selectedSport = '%tennis%';
                                     safeSetState(() {});
+                                    safeSetState(
+                                        () => _model.requestCompleter = null);
                                   },
                                   child: Container(
                                     height: 32.0,
@@ -733,6 +785,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   onTap: () async {
                                     _model.selectedSport = '%mma%';
                                     safeSetState(() {});
+                                    safeSetState(
+                                        () => _model.requestCompleter = null);
                                   },
                                   child: Container(
                                     height: 32.0,
@@ -810,6 +864,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   onTap: () async {
                                     _model.selectedSport = '%esports%';
                                     safeSetState(() {});
+                                    safeSetState(
+                                        () => _model.requestCompleter = null);
                                   },
                                   child: Container(
                                     height: 32.0,
@@ -889,14 +945,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 0.0, 16.0, 0.0, 0.0),
                             child:
                                 FutureBuilder<List<ForecastCardsFeedViewRow>>(
-                              future: ForecastCardsFeedViewTable().queryRows(
-                                queryFn: (q) => q
-                                    .ilike(
-                                      'sports_filter',
-                                      _model.selectedSport,
-                                    )
-                                    .order('updated_at'),
-                              ),
+                              future: (_model.requestCompleter ??= Completer<
+                                      List<ForecastCardsFeedViewRow>>()
+                                    ..complete(
+                                        ForecastCardsFeedViewTable().queryRows(
+                                      queryFn: (q) => q
+                                          .ilike(
+                                            'sports_filter',
+                                            _model.selectedSport,
+                                          )
+                                          .order('updated_at'),
+                                    )))
+                                  .future,
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
                                 if (!snapshot.hasData) {
@@ -917,148 +977,154 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     listViewForecastCardsFeedViewRowList =
                                     snapshot.data!;
 
-                                return ListView.separated(
-                                  padding: EdgeInsets.fromLTRB(
-                                    0,
-                                    0,
-                                    0,
-                                    16.0,
-                                  ),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount:
-                                      listViewForecastCardsFeedViewRowList
-                                          .length,
-                                  separatorBuilder: (_, __) =>
-                                      SizedBox(height: 8.0),
-                                  itemBuilder: (context, listViewIndex) {
-                                    final listViewForecastCardsFeedViewRow =
-                                        listViewForecastCardsFeedViewRowList[
-                                            listViewIndex];
-                                    return Builder(
-                                      builder: (context) {
-                                        if (listViewForecastCardsFeedViewRow
-                                                .type ==
-                                            'ordinary') {
-                                          return OrdinarWidget(
-                                            key: Key(
-                                                'Keytlb_${listViewIndex}_of_${listViewForecastCardsFeedViewRowList.length}'),
-                                            cardId:
-                                                listViewForecastCardsFeedViewRow
-                                                    .cardId!,
-                                            resultStatus:
-                                                listViewForecastCardsFeedViewRow
-                                                    .resultStatus!,
-                                            startTime:
-                                                listViewForecastCardsFeedViewRow
-                                                    .startTime!,
-                                            eventLeague:
-                                                listViewForecastCardsFeedViewRow
-                                                    .eventLeague!,
-                                            betMarket:
-                                                listViewForecastCardsFeedViewRow
-                                                    .betMarket!,
-                                            eventOdds:
-                                                listViewForecastCardsFeedViewRow
-                                                    .eventOdds!,
-                                            homeTeamId:
-                                                listViewForecastCardsFeedViewRow
-                                                    .homeTeamId!,
-                                            homeTeamName:
-                                                listViewForecastCardsFeedViewRow
-                                                    .homeTeamName!,
-                                            homeTeamLogoUrl:
-                                                listViewForecastCardsFeedViewRow
-                                                    .homeTeamLogoUrl!,
-                                            awayTeamId:
-                                                listViewForecastCardsFeedViewRow
-                                                    .awayTeamId!,
-                                            awayTeamName:
-                                                listViewForecastCardsFeedViewRow
-                                                    .awayTeamName!,
-                                            awayTeamLogoUrl:
-                                                listViewForecastCardsFeedViewRow
-                                                    .awayTeamLogoUrl!,
-                                            eventSport:
-                                                listViewForecastCardsFeedViewRow
-                                                    .eventSport!,
-                                          );
-                                        } else if (listViewForecastCardsFeedViewRow
-                                                .type ==
-                                            'express') {
-                                          return ExpressWidget(
-                                            key: Key(
-                                                'Keyopz_${listViewIndex}_of_${listViewForecastCardsFeedViewRowList.length}'),
-                                            cardId:
-                                                listViewForecastCardsFeedViewRow
-                                                    .cardId!,
-                                            totalOdds:
-                                                listViewForecastCardsFeedViewRow
-                                                    .totalOdds!,
-                                            resultStatus:
-                                                listViewForecastCardsFeedViewRow
-                                                    .resultStatus!,
-                                            startTime:
-                                                listViewForecastCardsFeedViewRow
-                                                    .startTime!,
-                                          );
-                                        } else if (listViewForecastCardsFeedViewRow
-                                                .type ==
-                                            'gold') {
-                                          return GoldWidget(
-                                            key: Key(
-                                                'Key351_${listViewIndex}_of_${listViewForecastCardsFeedViewRowList.length}'),
-                                            cardId:
-                                                listViewForecastCardsFeedViewRow
-                                                    .cardId!,
-                                            totalOdds:
-                                                listViewForecastCardsFeedViewRow
-                                                    .totalOdds!,
-                                            resultStatus:
-                                                listViewForecastCardsFeedViewRow
-                                                    .resultStatus!,
-                                            startTime:
-                                                listViewForecastCardsFeedViewRow
-                                                    .startTime!,
-                                            hasAccess:
-                                                listViewForecastCardsFeedViewRow
-                                                    .hasAccess!,
-                                            canPurchase:
-                                                listViewForecastCardsFeedViewRow
-                                                    .canPurchase!,
-                                            subscriptionPlanId:
-                                                listViewForecastCardsFeedViewRow
-                                                    .subscriptionPlanId!,
-                                          );
-                                        } else {
-                                          return PremiumWidget(
-                                            key: Key(
-                                                'Keyhk9_${listViewIndex}_of_${listViewForecastCardsFeedViewRowList.length}'),
-                                            cardId:
-                                                listViewForecastCardsFeedViewRow
-                                                    .cardId!,
-                                            totalOdds:
-                                                listViewForecastCardsFeedViewRow
-                                                    .totalOdds!,
-                                            resultStatus:
-                                                listViewForecastCardsFeedViewRow
-                                                    .resultStatus!,
-                                            startTime:
-                                                listViewForecastCardsFeedViewRow
-                                                    .startTime!,
-                                            hasAccess:
-                                                listViewForecastCardsFeedViewRow
-                                                    .hasAccess!,
-                                            canPurchase:
-                                                listViewForecastCardsFeedViewRow
-                                                    .canPurchase!,
-                                            subscriptionPlanId:
-                                                listViewForecastCardsFeedViewRow
-                                                    .subscriptionPlanId!,
-                                          );
-                                        }
-                                      },
-                                    );
+                                return RefreshIndicator(
+                                  onRefresh: () async {
+                                    safeSetState(
+                                        () => _model.requestCompleter = null);
                                   },
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.fromLTRB(
+                                      0,
+                                      0,
+                                      0,
+                                      16.0,
+                                    ),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount:
+                                        listViewForecastCardsFeedViewRowList
+                                            .length,
+                                    separatorBuilder: (_, __) =>
+                                        SizedBox(height: 8.0),
+                                    itemBuilder: (context, listViewIndex) {
+                                      final listViewForecastCardsFeedViewRow =
+                                          listViewForecastCardsFeedViewRowList[
+                                              listViewIndex];
+                                      return Builder(
+                                        builder: (context) {
+                                          if (listViewForecastCardsFeedViewRow
+                                                  .type ==
+                                              'ordinary') {
+                                            return OrdinarWidget(
+                                              key: Key(
+                                                  'Keytlb_${listViewIndex}_of_${listViewForecastCardsFeedViewRowList.length}'),
+                                              cardId:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .cardId!,
+                                              resultStatus:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .resultStatus!,
+                                              startTime:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .startTime,
+                                              eventLeague:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .eventLeague,
+                                              betMarket:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .betMarket,
+                                              eventOdds:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .eventOdds,
+                                              homeTeamId:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .homeTeamId!,
+                                              homeTeamName:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .homeTeamName!,
+                                              homeTeamLogoUrl:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .homeTeamLogoUrl,
+                                              awayTeamId:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .awayTeamId!,
+                                              awayTeamName:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .awayTeamName!,
+                                              awayTeamLogoUrl:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .awayTeamLogoUrl,
+                                              eventSport:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .eventSport,
+                                            );
+                                          } else if (listViewForecastCardsFeedViewRow
+                                                  .type ==
+                                              'express') {
+                                            return ExpressWidget(
+                                              key: Key(
+                                                  'Keyopz_${listViewIndex}_of_${listViewForecastCardsFeedViewRowList.length}'),
+                                              cardId:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .cardId!,
+                                              totalOdds:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .totalOdds!,
+                                              resultStatus:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .resultStatus!,
+                                              startTime:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .startTime!,
+                                            );
+                                          } else if (listViewForecastCardsFeedViewRow
+                                                  .type ==
+                                              'gold') {
+                                            return GoldWidget(
+                                              key: Key(
+                                                  'Key351_${listViewIndex}_of_${listViewForecastCardsFeedViewRowList.length}'),
+                                              cardId:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .cardId!,
+                                              totalOdds:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .totalOdds!,
+                                              resultStatus:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .resultStatus!,
+                                              startTime:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .startTime!,
+                                              hasAccess:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .hasAccess!,
+                                              canPurchase:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .canPurchase!,
+                                              subscriptionPlanId:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .subscriptionPlanId!,
+                                            );
+                                          } else {
+                                            return PremiumWidget(
+                                              key: Key(
+                                                  'Keyhk9_${listViewIndex}_of_${listViewForecastCardsFeedViewRowList.length}'),
+                                              cardId:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .cardId!,
+                                              totalOdds:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .totalOdds!,
+                                              resultStatus:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .resultStatus!,
+                                              startTime:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .startTime!,
+                                              hasAccess:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .hasAccess!,
+                                              canPurchase:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .canPurchase!,
+                                              subscriptionPlanId:
+                                                  listViewForecastCardsFeedViewRow
+                                                      .subscriptionPlanId!,
+                                            );
+                                          }
+                                        },
+                                      );
+                                    },
+                                  ),
                                 );
                               },
                             ),

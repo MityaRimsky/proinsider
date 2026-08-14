@@ -267,12 +267,16 @@ dynamic deserializeParam<T>(
             return LearningBasicsRow(data);
           case PaymentsRow:
             return PaymentsRow(data);
+          case UserNotificationPreferencesRow:
+            return UserNotificationPreferencesRow(data);
           case UserForecastAssignmentsRow:
             return UserForecastAssignmentsRow(data);
           case BookmakerBonusesRow:
             return BookmakerBonusesRow(data);
           case SubscriptionCardsViewRow:
             return SubscriptionCardsViewRow(data);
+          case UserPushTokensRow:
+            return UserPushTokensRow(data);
           case WebhookEventsRow:
             return WebhookEventsRow(data);
           case SubscriptionOptionsRow:

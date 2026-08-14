@@ -94,7 +94,7 @@ class _LivePageWidgetState extends State<LivePageWidget> {
                               8.0, 0.0, 8.0, 0.0),
                           child: FutureBuilder<List<MyLivePredictionsRow>>(
                             future: MyLivePredictionsTable().queryRows(
-                              queryFn: (q) => q,
+                              queryFn: (q) => q.order('published_at'),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.

@@ -9,16 +9,16 @@ class EventCardWidget extends StatefulWidget {
   const EventCardWidget({
     super.key,
     required this.cardId,
-    required this.eventLeague,
-    required this.predictionText,
-    required this.eventOdds,
+    this.eventLeague,
+    this.predictionText,
+    this.eventOdds,
     required this.homeTeamId,
     required this.homeTeamName,
-    required this.homeTeamLogoUrl,
+    this.homeTeamLogoUrl,
     required this.awayTeamId,
     required this.awayTeamName,
-    required this.awayTeamLogoUrl,
-    required this.eventSport,
+    this.awayTeamLogoUrl,
+    this.eventSport,
     this.winnerTeamId,
     this.homeScore,
     this.awayScore,
@@ -228,7 +228,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                             child: Text(
                               valueOrDefault<String>(
                                 widget.eventOdds?.toString(),
-                                '1.77',
+                                '0.00',
                               ),
                               maxLines: 1,
                               style: FlutterFlowTheme.of(context)
@@ -284,7 +284,10 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
-                            widget.homeTeamLogoUrl!,
+                            valueOrDefault<String>(
+                              widget.homeTeamLogoUrl,
+                              'https://proinsider.ru/storage/v1/object/public/team_images/logo_alternative.png',
+                            ),
                             width: 32.0,
                             height: 32.0,
                             fit: BoxFit.contain,
@@ -355,9 +358,9 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                                   .headlineLarge
                                                   .fontStyle,
                                         ),
-                                        color: (widget.winnerTeamId ==
-                                                    widget.homeTeamId) &&
-                                                (widget.eventSport == 'mma')
+                                        color: (widget.eventSport == 'mma') &&
+                                                ((widget.homeScore == 'w') ||
+                                                    (widget.homeScore == 'W'))
                                             ? FlutterFlowTheme.of(context)
                                                 .tertiary
                                             : FlutterFlowTheme.of(context)
@@ -415,9 +418,9 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                                   .headlineLarge
                                                   .fontStyle,
                                         ),
-                                        color: (widget.winnerTeamId ==
-                                                    widget.awayTeamId) &&
-                                                (widget.eventSport == 'mma')
+                                        color: (widget.eventSport == 'mma') &&
+                                                ((widget.awayScore == 'w') ||
+                                                    (widget.awayScore == 'W'))
                                             ? FlutterFlowTheme.of(context)
                                                 .tertiary
                                             : FlutterFlowTheme.of(context)
@@ -493,7 +496,10 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
-                            widget.awayTeamLogoUrl!,
+                            valueOrDefault<String>(
+                              widget.awayTeamLogoUrl,
+                              'https://proinsider.ru/storage/v1/object/public/team_images/logo_alternative.png',
+                            ),
                             width: 32.0,
                             height: 32.0,
                             fit: BoxFit.contain,

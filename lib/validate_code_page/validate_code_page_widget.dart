@@ -1,9 +1,12 @@
+import '/auth/supabase_auth/auth_util.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/permissions_util.dart';
 import '/index.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -300,6 +303,22 @@ class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget>
                                       duration: Duration(milliseconds: 0),
                                     ),
                                   },
+                                );
+                              }
+
+                              await requestPermission(notificationsPermission);
+                              if (await getPermissionStatus(
+                                  notificationsPermission)) {
+                                await actions.registerPushToken();
+                              } else {
+                                await UserNotificationPreferencesTable().update(
+                                  data: {
+                                    'push_enabled': false,
+                                  },
+                                  matchingRows: (rows) => rows.eqOrNull(
+                                    'user_id',
+                                    currentUserUid,
+                                  ),
                                 );
                               }
                             } else {

@@ -26,11 +26,11 @@ class SubscriptionDetailsPageModel
   late GoldSubscriptionHeaderModel goldSubscriptionHeaderModel;
   // Model for LiveSubscriptionHeader component.
   late LiveSubscriptionHeaderModel liveSubscriptionHeaderModel;
+  Completer<List<SubscriptionPlanDetailsViewRow>>? requestCompleter;
   // Stores action output result for [Backend Call - API (CreatePayment)] action in Button widget.
   ApiCallResponse? createPaymentResult;
   // Stores action output result for [Bottom Sheet - CancelSubscriptionSheet] action in Button widget.
   bool? cancelResult;
-  Completer<List<SubscriptionPlanDetailsViewRow>>? requestCompleter;
 
   @override
   void initState(BuildContext context) {

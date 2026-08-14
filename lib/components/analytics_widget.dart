@@ -9,8 +9,8 @@ class AnalyticsWidget extends StatefulWidget {
   const AnalyticsWidget({
     super.key,
     required this.analyticsTitle,
-    required this.analyticsText,
-    required this.analyticsSummary,
+    this.analyticsText,
+    this.analyticsSummary,
   });
 
   final String? analyticsTitle;
@@ -150,33 +150,45 @@ class _AnalyticsWidgetState extends State<AnalyticsWidget> {
                     ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).tertiaryBackground,
-                  borderRadius: BorderRadius.circular(24.0),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Icon(
-                        FFIcons.kflash,
-                        color: FlutterFlowTheme.of(context).accent2,
-                        size: 24.0,
-                      ),
-                      Expanded(
-                        child: Text(
-                          valueOrDefault<String>(
-                            widget.analyticsSummary,
-                            'Рекомендации',
-                          ),
-                          style: FlutterFlowTheme.of(context)
-                              .labelSmall
-                              .override(
-                                font: GoogleFonts.roboto(
+            if (widget.analyticsSummary != null &&
+                widget.analyticsSummary != '')
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).tertiaryBackground,
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Icon(
+                          FFIcons.kflash,
+                          color: FlutterFlowTheme.of(context).accent2,
+                          size: 24.0,
+                        ),
+                        Expanded(
+                          child: Text(
+                            valueOrDefault<String>(
+                              widget.analyticsSummary,
+                              'Рекомендации',
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .labelSmall
+                                .override(
+                                  font: GoogleFonts.roboto(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .labelSmall
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .labelSmall
+                                        .fontStyle,
+                                  ),
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  letterSpacing: 0.0,
                                   fontWeight: FlutterFlowTheme.of(context)
                                       .labelSmall
                                       .fontWeight,
@@ -184,23 +196,13 @@ class _AnalyticsWidgetState extends State<AnalyticsWidget> {
                                       .labelSmall
                                       .fontStyle,
                                 ),
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .labelSmall
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .labelSmall
-                                    .fontStyle,
-                              ),
+                          ),
                         ),
-                      ),
-                    ].divide(SizedBox(width: 8.0)),
+                      ].divide(SizedBox(width: 8.0)),
+                    ),
                   ),
                 ),
               ),
-            ),
           ].addToEnd(SizedBox(height: 16.0)),
         ),
       ),

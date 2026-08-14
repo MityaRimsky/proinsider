@@ -94,6 +94,18 @@ class FFAppState extends ChangeNotifier {
   set unreadNotificationsCount(int value) {
     _unreadNotificationsCount = value;
   }
+
+  String _pushType = '';
+  String get pushType => _pushType;
+  set pushType(String value) {
+    _pushType = value;
+  }
+
+  int _pushCardId = 0;
+  int get pushCardId => _pushCardId;
+  set pushCardId(int value) {
+    _pushCardId = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

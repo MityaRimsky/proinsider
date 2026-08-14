@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -36,6 +37,7 @@ class _LoggedInSplashScreenWidgetState
           milliseconds: 5000,
         ),
       );
+      _model.getOpenedPushData = await actions.getOpenedPushData();
 
       context.goNamed(
         HomePageWidget.routeName,

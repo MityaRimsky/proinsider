@@ -580,8 +580,17 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                           mouseCursor: SystemMouseCursors.click,
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
-                              context
-                                  .pushNamed(UserAgreementPageWidget.routeName);
+                              context.pushNamed(
+                                UserAgreementPageWidget.routeName,
+                                extra: <String, dynamic>{
+                                  '__transition_info__': TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType:
+                                        PageTransitionType.rightToLeft,
+                                    duration: Duration(milliseconds: 150),
+                                  ),
+                                },
+                              );
                             },
                         ),
                         TextSpan(
@@ -629,8 +638,17 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                           mouseCursor: SystemMouseCursors.click,
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
-                              context
-                                  .pushNamed(PrivacyPolicyPageWidget.routeName);
+                              context.pushNamed(
+                                PrivacyPolicyPageWidget.routeName,
+                                extra: <String, dynamic>{
+                                  '__transition_info__': TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType:
+                                        PageTransitionType.rightToLeft,
+                                    duration: Duration(milliseconds: 150),
+                                  ),
+                                },
+                              );
                             },
                         )
                       ],
