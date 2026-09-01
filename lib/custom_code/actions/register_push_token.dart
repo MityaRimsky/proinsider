@@ -17,15 +17,26 @@ Future registerPushToken() async {
     final supabase = Supabase.instance.client;
     final user = supabase.auth.currentUser;
 
-    if (user == null) {
-      return;
+    if (user == null) return;
+
+    final messaging = FirebaseMessaging.instance;
+
+    // На iOS ждём, пока APNs зарегистрирует устройство.
+    if (Platform.isIOS) {
+      for (var i = 0; i < 10; i++) {
+        final apnsToken = await messaging.getAPNSToken();
+
+        if (apnsToken != null && apnsToken.isNotEmpty) {
+          break;
+        }
+
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
     }
 
-    final token = await FirebaseMessaging.instance.getToken();
+    final token = await messaging.getToken();
 
-    if (token == null || token.isEmpty) {
-      return;
-    }
+    if (token == null || token.isEmpty) return;
 
     final platform = Platform.isIOS ? 'ios' : 'android';
 

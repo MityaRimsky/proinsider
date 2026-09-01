@@ -174,18 +174,25 @@ class _LivePageWidgetState extends State<LivePageWidget> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                        child: Image.network(
+                                                      if (livePredictionsItem
+                                                                  .imageUrl !=
+                                                              null &&
                                                           livePredictionsItem
-                                                              .imageUrl!,
-                                                          width:
-                                                              double.infinity,
-                                                          fit: BoxFit.cover,
+                                                                  .imageUrl !=
+                                                              '')
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          child: Image.network(
+                                                            livePredictionsItem
+                                                                .imageUrl!,
+                                                            width:
+                                                                double.infinity,
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                         ),
-                                                      ),
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional

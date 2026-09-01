@@ -87,4 +87,7 @@ class SubscriptionPlanDetailsViewRow extends SupabaseDataRow {
   double? get currentOptionPrice => getField<double>('current_option_price');
   set currentOptionPrice(double? value) =>
       setField<double>('current_option_price', value);
+
+  int? get sortOrder => getField<int>('sort_order');
+  set sortOrder(int? value) => setField<int>('sort_order', value);
 }

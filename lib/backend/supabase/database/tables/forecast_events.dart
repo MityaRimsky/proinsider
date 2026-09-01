@@ -33,11 +33,11 @@ class ForecastEventsRow extends SupabaseDataRow {
   int get awayTeamId => getField<int>('away_team_id')!;
   set awayTeamId(int value) => setField<int>('away_team_id', value);
 
-  DateTime get eventTime => getField<DateTime>('event_time')!;
-  set eventTime(DateTime value) => setField<DateTime>('event_time', value);
+  DateTime? get eventTime => getField<DateTime>('event_time');
+  set eventTime(DateTime? value) => setField<DateTime>('event_time', value);
 
-  String get betMarket => getField<String>('bet_market')!;
-  set betMarket(String value) => setField<String>('bet_market', value);
+  String? get betMarket => getField<String>('bet_market');
+  set betMarket(String? value) => setField<String>('bet_market', value);
 
   double get odds => getField<double>('odds')!;
   set odds(double value) => setField<double>('odds', value);

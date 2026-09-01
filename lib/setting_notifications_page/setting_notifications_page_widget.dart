@@ -226,9 +226,9 @@ class _SettingNotificationsPageWidgetState
                               if (newValue) {
                                 await requestPermission(
                                     notificationsPermission);
+                                await actions.registerPushToken();
                                 if (await getPermissionStatus(
                                     notificationsPermission)) {
-                                  await actions.registerPushToken();
                                   await UserNotificationPreferencesTable()
                                       .update(
                                     data: {

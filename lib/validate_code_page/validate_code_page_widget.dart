@@ -307,10 +307,9 @@ class _ValidateCodePageWidgetState extends State<ValidateCodePageWidget>
                               }
 
                               await requestPermission(notificationsPermission);
-                              if (await getPermissionStatus(
-                                  notificationsPermission)) {
-                                await actions.registerPushToken();
-                              } else {
+                              await actions.registerPushToken();
+                              if (!(await getPermissionStatus(
+                                  notificationsPermission))) {
                                 await UserNotificationPreferencesTable().update(
                                   data: {
                                     'push_enabled': false,

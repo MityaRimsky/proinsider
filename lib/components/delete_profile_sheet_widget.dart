@@ -1,4 +1,5 @@
 import '/auth/supabase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -127,12 +128,55 @@ class _DeleteProfileSheetWidgetState extends State<DeleteProfileSheetWidget> {
                   Expanded(
                     child: FFButtonWidget(
                       onPressed: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
+                        Function() _navigate = () {};
+                        _model.apiResultla8 = await DeleteAccountCall.call(
+                          accessToken: currentJwtToken,
+                        );
 
-                        context.goNamedAuth(
-                            SplashScreenWidget.routeName, context.mounted);
+                        if ((_model.apiResultla8?.succeeded ?? true)) {
+                          GoRouter.of(context).prepareAuthEvent();
+                          await authManager.signOut();
+                          GoRouter.of(context).clearRedirectLocation();
+
+                          _navigate = () => context.goNamedAuth(
+                              SplashScreenWidget.routeName, context.mounted);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Не удалось удалить аккаунт. Попробуйте ещё раз.',
+                                style: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .override(
+                                      font: GoogleFonts.roboto(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .whiteText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .fontStyle,
+                                    ),
+                              ),
+                              duration: Duration(milliseconds: 3000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).error,
+                            ),
+                          );
+                        }
+
+                        _navigate();
+
+                        safeSetState(() {});
                       },
                       text: 'Удалить',
                       options: FFButtonOptions(

@@ -128,172 +128,176 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                             ].divide(SizedBox(width: 8.0)),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 16.0, 0.0, 0.0),
-                          child: FutureBuilder<
-                              List<SubscriptionPlanDetailsViewRow>>(
-                            future:
-                                SubscriptionPlanDetailsViewTable().queryRows(
-                              queryFn: (q) => q,
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 32.0,
-                                    height: 32.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 16.0, 0.0, 0.0),
+                            child: FutureBuilder<
+                                List<SubscriptionPlanDetailsViewRow>>(
+                              future:
+                                  SubscriptionPlanDetailsViewTable().queryRows(
+                                queryFn: (q) =>
+                                    q.order('sort_order', ascending: true),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 32.0,
+                                      height: 32.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                              List<SubscriptionPlanDetailsViewRow>
-                                  listViewSubscriptionPlanDetailsViewRowList =
-                                  snapshot.data!;
-
-                              return ListView.separated(
-                                padding: EdgeInsets.fromLTRB(
-                                  0,
-                                  0,
-                                  0,
-                                  16.0,
-                                ),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount:
-                                    listViewSubscriptionPlanDetailsViewRowList
-                                        .length,
-                                separatorBuilder: (_, __) =>
-                                    SizedBox(height: 8.0),
-                                itemBuilder: (context, listViewIndex) {
-                                  final listViewSubscriptionPlanDetailsViewRow =
-                                      listViewSubscriptionPlanDetailsViewRowList[
-                                          listViewIndex];
-                                  return Builder(
-                                    builder: (context) {
-                                      if (listViewSubscriptionPlanDetailsViewRow
-                                              .name ==
-                                          'premium') {
-                                        return PremiumPlanCardWidget(
-                                          key: Key(
-                                              'Key1lu_${listViewIndex}_of_${listViewSubscriptionPlanDetailsViewRowList.length}'),
-                                          planId:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .planId!,
-                                          subtitle:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .subtitle!,
-                                          displayPrice:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                          .hasAccess ==
-                                                      true
-                                                  ? listViewSubscriptionPlanDetailsViewRow
-                                                      .currentOptionPrice!
-                                                  : listViewSubscriptionPlanDetailsViewRow
-                                                      .option1Price!,
-                                          displayOptionName:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                          .hasAccess ==
-                                                      true
-                                                  ? listViewSubscriptionPlanDetailsViewRow
-                                                      .currentOptionName!
-                                                  : listViewSubscriptionPlanDetailsViewRow
-                                                      .option1Name!,
-                                          planName:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .name!,
-                                          remainingForecasts:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .remainingForecasts,
-                                          hasAccess:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .hasAccess!,
-                                        );
-                                      } else if (listViewSubscriptionPlanDetailsViewRow
-                                              .name ==
-                                          'gold') {
-                                        return GoldPlanCardWidget(
-                                          key: Key(
-                                              'Key27q_${listViewIndex}_of_${listViewSubscriptionPlanDetailsViewRowList.length}'),
-                                          planId:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .planId!,
-                                          subtitle:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .subtitle!,
-                                          displayPrice:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                          .hasAccess ==
-                                                      true
-                                                  ? listViewSubscriptionPlanDetailsViewRow
-                                                      .currentOptionPrice!
-                                                  : listViewSubscriptionPlanDetailsViewRow
-                                                      .option1Price!,
-                                          displayOptionName:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                          .hasAccess ==
-                                                      true
-                                                  ? listViewSubscriptionPlanDetailsViewRow
-                                                      .currentOptionName!
-                                                  : listViewSubscriptionPlanDetailsViewRow
-                                                      .option1Name!,
-                                          planName:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .name!,
-                                          remainingForecasts:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .remainingForecasts,
-                                          hasAccess:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .hasAccess!,
-                                        );
-                                      } else {
-                                        return LivePlanCardWidget(
-                                          key: Key(
-                                              'Keyemk_${listViewIndex}_of_${listViewSubscriptionPlanDetailsViewRowList.length}'),
-                                          planId:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .planId!,
-                                          subtitle:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .subtitle!,
-                                          displayPrice:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                          .hasAccess ==
-                                                      true
-                                                  ? listViewSubscriptionPlanDetailsViewRow
-                                                      .currentOptionPrice!
-                                                  : listViewSubscriptionPlanDetailsViewRow
-                                                      .option1Price!,
-                                          displayOptionName:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                          .hasAccess ==
-                                                      true
-                                                  ? listViewSubscriptionPlanDetailsViewRow
-                                                      .currentOptionName!
-                                                  : listViewSubscriptionPlanDetailsViewRow
-                                                      .option1Name!,
-                                          planName:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .name!,
-                                          hasAccess:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .hasAccess!,
-                                          expiresAt:
-                                              listViewSubscriptionPlanDetailsViewRow
-                                                  .expiresAt,
-                                        );
-                                      }
-                                    },
                                   );
-                                },
-                              );
-                            },
+                                }
+                                List<SubscriptionPlanDetailsViewRow>
+                                    listViewSubscriptionPlanDetailsViewRowList =
+                                    snapshot.data!;
+
+                                return ListView.separated(
+                                  padding: EdgeInsets.fromLTRB(
+                                    0,
+                                    0,
+                                    0,
+                                    16.0,
+                                  ),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount:
+                                      listViewSubscriptionPlanDetailsViewRowList
+                                          .length,
+                                  separatorBuilder: (_, __) =>
+                                      SizedBox(height: 8.0),
+                                  itemBuilder: (context, listViewIndex) {
+                                    final listViewSubscriptionPlanDetailsViewRow =
+                                        listViewSubscriptionPlanDetailsViewRowList[
+                                            listViewIndex];
+                                    return Builder(
+                                      builder: (context) {
+                                        if (listViewSubscriptionPlanDetailsViewRow
+                                                .name ==
+                                            'premium') {
+                                          return PremiumPlanCardWidget(
+                                            key: Key(
+                                                'Key1lu_${listViewIndex}_of_${listViewSubscriptionPlanDetailsViewRowList.length}'),
+                                            planId:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .planId!,
+                                            subtitle:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .subtitle!,
+                                            displayPrice:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                            .hasAccess ==
+                                                        true
+                                                    ? listViewSubscriptionPlanDetailsViewRow
+                                                        .currentOptionPrice!
+                                                    : listViewSubscriptionPlanDetailsViewRow
+                                                        .option1Price!,
+                                            displayOptionName:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                            .hasAccess ==
+                                                        true
+                                                    ? listViewSubscriptionPlanDetailsViewRow
+                                                        .currentOptionName!
+                                                    : listViewSubscriptionPlanDetailsViewRow
+                                                        .option1Name!,
+                                            planName:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .name!,
+                                            remainingForecasts:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .remainingForecasts,
+                                            hasAccess:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .hasAccess!,
+                                          );
+                                        } else if (listViewSubscriptionPlanDetailsViewRow
+                                                .name ==
+                                            'gold') {
+                                          return GoldPlanCardWidget(
+                                            key: Key(
+                                                'Key27q_${listViewIndex}_of_${listViewSubscriptionPlanDetailsViewRowList.length}'),
+                                            planId:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .planId!,
+                                            subtitle:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .subtitle!,
+                                            displayPrice:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                            .hasAccess ==
+                                                        true
+                                                    ? listViewSubscriptionPlanDetailsViewRow
+                                                        .currentOptionPrice!
+                                                    : listViewSubscriptionPlanDetailsViewRow
+                                                        .option1Price!,
+                                            displayOptionName:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                            .hasAccess ==
+                                                        true
+                                                    ? listViewSubscriptionPlanDetailsViewRow
+                                                        .currentOptionName!
+                                                    : listViewSubscriptionPlanDetailsViewRow
+                                                        .option1Name!,
+                                            planName:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .name!,
+                                            remainingForecasts:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .remainingForecasts,
+                                            hasAccess:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .hasAccess!,
+                                          );
+                                        } else {
+                                          return LivePlanCardWidget(
+                                            key: Key(
+                                                'Keyemk_${listViewIndex}_of_${listViewSubscriptionPlanDetailsViewRowList.length}'),
+                                            planId:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .planId!,
+                                            subtitle:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .subtitle!,
+                                            displayPrice:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                            .hasAccess ==
+                                                        true
+                                                    ? listViewSubscriptionPlanDetailsViewRow
+                                                        .currentOptionPrice!
+                                                    : listViewSubscriptionPlanDetailsViewRow
+                                                        .option1Price!,
+                                            displayOptionName:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                            .hasAccess ==
+                                                        true
+                                                    ? listViewSubscriptionPlanDetailsViewRow
+                                                        .currentOptionName!
+                                                    : listViewSubscriptionPlanDetailsViewRow
+                                                        .option1Name!,
+                                            planName:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .name!,
+                                            hasAccess:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .hasAccess!,
+                                            expiresAt:
+                                                listViewSubscriptionPlanDetailsViewRow
+                                                    .expiresAt,
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],

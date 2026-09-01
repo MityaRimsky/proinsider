@@ -156,6 +156,7 @@ class _PremiumSubscriptionHeaderWidgetState
                           widget.subtitle,
                           'Более 85% проходных прогнозов ',
                         ),
+                        textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).labelSmall.override(
                               font: GoogleFonts.roboto(
                                 fontWeight: FlutterFlowTheme.of(context)
