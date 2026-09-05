@@ -254,59 +254,137 @@ Deno.serve(async (req: Request) => {
       }
 
       /*
-       * 2. Проверяем свежий pending-платёж Live.
-       *
-       * Защищает от двойного клика и повторного создания
-       * нескольких ссылок CloudPayments.
+       * 2. Перед созданием новой Live-ссылки отменяем старые
+       * pending orders в CloudPayments. Pending без сохранённого
+       * provider_payload.Model.Id не блокируют новую оплату.
        */
-      const pendingSince = new Date(
-        Date.now() - 10 * 60 * 1000,
-      ).toISOString();
-
       const {
-        data: existingPendingPayment,
-        error: existingPendingPaymentError,
+        data: existingPendingPayments,
+        error: existingPendingPaymentsError,
       } = await admin
         .from("payments")
-        .select("id, invoice_id, created_at, status")
+        .select("id, provider_payload")
         .eq("user_id", user.id)
         .eq("provider", "cloudpayments")
         .eq("payment_type", "subscription_initial")
         .eq("status", "pending")
-        .gte("created_at", pendingSince)
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
+        .order("created_at", { ascending: false });
 
-      if (existingPendingPaymentError) {
+      if (existingPendingPaymentsError) {
         console.error(
-          "Failed to check pending Live payment:",
-          existingPendingPaymentError,
+          "Failed to read pending Live payments:",
+          existingPendingPaymentsError,
         );
 
         return jsonResponse(
           {
             error: "database_error",
-            message: "Не удалось проверить текущий платёж",
+            message: "Не удалось проверить текущие платежи",
           },
           500,
         );
       }
 
-      if (existingPendingPayment) {
-        return jsonResponse(
-          {
-            error: "live_subscription_payment_already_pending",
-            message:
-              "Платёж для подключения Live уже создан. Завершите оплату или попробуйте позже.",
-            payment: {
-              id: existingPendingPayment.id,
-              invoice_id: existingPendingPayment.invoice_id,
-              created_at: existingPendingPayment.created_at,
+      for (const pendingPayment of existingPendingPayments ?? []) {
+        const payload = pendingPayment.provider_payload as
+          | CloudPaymentsOrderResponse
+          | null;
+        const cloudPaymentsOrderId = payload?.Model?.Id;
+
+        if (!cloudPaymentsOrderId) {
+          continue;
+        }
+
+        let cancelResponse: Response;
+
+        try {
+          cancelResponse = await fetch(
+            "https://api.cloudpayments.ru/orders/cancel",
+            {
+              method: "POST",
+              headers: {
+                Authorization: basicAuth(
+                  cloudPaymentsPublicId,
+                  cloudPaymentsApiSecret,
+                ),
+                "Content-Type": "application/json",
+                "X-Request-ID": crypto.randomUUID(),
+              },
+              body: JSON.stringify({
+                Id: cloudPaymentsOrderId,
+              }),
             },
-          },
-          409,
-        );
+          );
+        } catch (error) {
+          console.error(
+            "CloudPayments order cancellation connection error:",
+            pendingPayment.id,
+            error,
+          );
+
+          return jsonResponse(
+            {
+              error: "cloudpayments_order_cancellation_failed",
+              message: "Не удалось отменить предыдущий платёж Live",
+            },
+            502,
+          );
+        }
+
+        const cancelResponseText = await cancelResponse.text();
+        let cancelResult: CloudPaymentsOrderResponse;
+
+        try {
+          cancelResult = JSON.parse(cancelResponseText);
+        } catch {
+          console.error(
+            "Invalid CloudPayments order cancellation response:",
+            pendingPayment.id,
+            cancelResponse.status,
+            cancelResponseText,
+          );
+
+          return jsonResponse(
+            {
+              error: "cloudpayments_order_cancellation_failed",
+              message: "Не удалось отменить предыдущий платёж Live",
+            },
+            502,
+          );
+        }
+
+        if (!cancelResponse.ok || cancelResult.Success !== true) {
+          console.error(
+            "CloudPayments rejected order cancellation:",
+            pendingPayment.id,
+            cancelResponse.status,
+            cancelResult,
+          );
+
+          return jsonResponse(
+            {
+              error: "cloudpayments_order_cancellation_failed",
+              message: "Не удалось отменить предыдущий платёж Live",
+            },
+            502,
+          );
+        }
+
+        const { error: cancelPaymentError } = await admin
+          .from("payments")
+          .update({
+            status: "cancelled",
+          })
+          .eq("id", pendingPayment.id)
+          .eq("status", "pending");
+
+        if (cancelPaymentError) {
+          console.error(
+            "CloudPayments cancelled order, but local payment update failed:",
+            pendingPayment.id,
+            cancelPaymentError,
+          );
+        }
       }
     }
 
