@@ -1,3 +1,4 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -149,29 +150,67 @@ class _PrivacyPolicyPageWidgetState extends State<PrivacyPolicyPageWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 16.0, 0.0, 0.0),
-                            child: Text(
-                              'Политика конфиденциальности ProInsider описывает, какие данные мы собираем, как используем их и какие меры принимаем для защиты информации пользователей. Мы можем получать данные о действиях в приложении, выбранных настройках, устройстве и взаимодействии с контентом. Эта информация помогает нам улучшать качество прогнозов, персонализировать рекомендации и обеспечивать стабильную работу сервиса.\n\nМы не передаём личные данные третьим лицам без согласия пользователя, за исключением случаев, предусмотренных законодательством. В отдельных случаях данные могут использоваться для аналитики, повышения качества продукта и предотвращения злоупотреблений. Все процессы обработки данных соответствуют современным стандартам безопасности.\n\nПользователь может в любой момент управлять настройками уведомлений, приватности и доступом к данным внутри приложения. Мы стремимся обеспечить прозрачность и контроль над персональной информацией.\n\nИспользуя сервис ProInsider, вы подтверждаете согласие с условиями данной политики конфиденциальности и принимаете правила обработки данных, направленные на улучшение пользовательского опыта и развитие продукта.',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.roboto(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
+                            child: FutureBuilder<List<LegalDocumentsRow>>(
+                              future: LegalDocumentsTable().querySingleRow(
+                                queryFn: (q) => q.eqOrNull(
+                                  'document_key',
+                                  'privacy_policy',
+                                ),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 32.0,
+                                      height: 32.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
+                                      ),
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                  );
+                                }
+                                List<LegalDocumentsRow>
+                                    textLegalDocumentsRowList = snapshot.data!;
+
+                                final textLegalDocumentsRow =
+                                    textLegalDocumentsRowList.isNotEmpty
+                                        ? textLegalDocumentsRowList.first
+                                        : null;
+
+                                return Text(
+                                  valueOrDefault<String>(
+                                    textLegalDocumentsRow?.content,
+                                    'privacy_policy',
                                   ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.roboto(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                );
+                              },
                             ),
                           ),
                         ),

@@ -21,6 +21,7 @@ export 'tables/learning_basics.dart';
 export 'tables/payments.dart';
 export 'tables/user_notification_preferences.dart';
 export 'tables/user_forecast_assignments.dart';
+export 'tables/legal_documents.dart';
 export 'tables/bookmaker_bonuses.dart';
 export 'tables/subscription_cards_view.dart';
 export 'tables/user_push_tokens.dart';

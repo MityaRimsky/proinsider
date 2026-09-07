@@ -271,6 +271,8 @@ dynamic deserializeParam<T>(
             return UserNotificationPreferencesRow(data);
           case UserForecastAssignmentsRow:
             return UserForecastAssignmentsRow(data);
+          case LegalDocumentsRow:
+            return LegalDocumentsRow(data);
           case BookmakerBonusesRow:
             return BookmakerBonusesRow(data);
           case SubscriptionCardsViewRow:

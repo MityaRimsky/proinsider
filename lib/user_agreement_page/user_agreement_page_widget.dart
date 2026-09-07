@@ -1,3 +1,4 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +120,7 @@ class _UserAgreementPageWidgetState extends State<UserAgreementPageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 64.0, 0.0, 0.0),
                             child: Text(
-                              'Пользовательское соглашение',
+                              'Пользовательское соглашение (Оферта)',
                               style: FlutterFlowTheme.of(context)
                                   .labelLarge
                                   .override(
@@ -149,29 +150,67 @@ class _UserAgreementPageWidgetState extends State<UserAgreementPageWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 16.0, 0.0, 0.0),
-                            child: Text(
-                              'Пользовательское соглашение ProInsider регулирует порядок использования сервиса и устанавливает права и обязанности сторон. Используя приложение, пользователь подтверждает согласие с условиями данного соглашения и обязуется соблюдать установленные правила.\n\nСервис ProInsider предоставляет аналитические материалы и прогнозы, которые носят информационный характер и не являются гарантией результата. Пользователь самостоятельно принимает решения о ставках и несёт полную ответственность за их последствия. Администрация сервиса не отвечает за финансовые потери, связанные с использованием предоставленной информации.\n\nПользователь обязуется использовать приложение добросовестно, не нарушать работу сервиса и не предпринимать действий, направленных на получение несанкционированного доступа к данным. Запрещается копирование, распространение или использование материалов сервиса без разрешения.\n\nАдминистрация оставляет за собой право вносить изменения в функциональность сервиса, обновлять условия соглашения и ограничивать доступ при нарушении правил.\n\nПродолжая использование ProInsider, пользователь подтверждает, что ознакомлен с условиями соглашения, понимает возможные риски и принимает их в полном объёме.',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.roboto(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
+                            child: FutureBuilder<List<LegalDocumentsRow>>(
+                              future: LegalDocumentsTable().querySingleRow(
+                                queryFn: (q) => q.eqOrNull(
+                                  'document_key',
+                                  'terms_of_use',
+                                ),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 32.0,
+                                      height: 32.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
+                                      ),
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                  );
+                                }
+                                List<LegalDocumentsRow>
+                                    textLegalDocumentsRowList = snapshot.data!;
+
+                                final textLegalDocumentsRow =
+                                    textLegalDocumentsRowList.isNotEmpty
+                                        ? textLegalDocumentsRowList.first
+                                        : null;
+
+                                return Text(
+                                  valueOrDefault<String>(
+                                    textLegalDocumentsRow?.content,
+                                    'terms_of_use',
                                   ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.roboto(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                );
+                              },
                             ),
                           ),
                         ),

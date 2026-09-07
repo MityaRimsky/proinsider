@@ -1,3 +1,4 @@
+import '/auth/supabase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -36,6 +37,9 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
 
     _model.fieldForEmailTextController ??= TextEditingController();
     _model.fieldForEmailFocusNode ??= FocusNode();
+
+    _model.fieldForPasswordTextController ??= TextEditingController();
+    _model.fieldForPasswordFocusNode ??= FocusNode();
   }
 
   @override
@@ -294,71 +298,321 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                           ),
                         ),
                       ),
+                      if (_model.fieldForEmailTextController.text ==
+                          'review@proinsider.ru')
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 16.0, 0.0, 0.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: 48.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.0),
+                            ),
+                            child: Container(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller:
+                                    _model.fieldForPasswordTextController,
+                                focusNode: _model.fieldForPasswordFocusNode,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  '_model.fieldForPasswordTextController',
+                                  Duration(milliseconds: 100),
+                                  () => safeSetState(() {}),
+                                ),
+                                autofocus: true,
+                                textCapitalization: TextCapitalization.none,
+                                obscureText: !_model.fieldForPasswordVisibility,
+                                decoration: InputDecoration(
+                                  isDense: false,
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        font: GoogleFonts.roboto(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryText,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .fontStyle,
+                                      ),
+                                  hintText: 'Введите пароль',
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.roboto(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryText,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 0.0, 0.0),
+                                  suffixIcon: InkWell(
+                                    onTap: () async {
+                                      safeSetState(() => _model
+                                              .fieldForPasswordVisibility =
+                                          !_model.fieldForPasswordVisibility);
+                                    },
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      _model.fieldForPasswordVisibility
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 20.0,
+                                    ),
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.roboto(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                cursorColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                enableInteractiveSelection: false,
+                                validator: _model
+                                    .fieldForPasswordTextControllerValidator
+                                    .asValidator(context),
+                                inputFormatters: [
+                                  if (!isAndroid && !isiOS)
+                                    TextInputFormatter.withFunction(
+                                        (oldValue, newValue) {
+                                      return TextEditingValue(
+                                        selection: newValue.selection,
+                                        text: newValue.text.toCapitalization(
+                                            TextCapitalization.none),
+                                      );
+                                    }),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
-                        child: Semantics(
-                          label: 'next',
-                          child: FFButtonWidget(
-                            onPressed: (functions.isEmailValid(_model
-                                        .fieldForEmailTextController.text) ==
-                                    false)
-                                ? null
-                                : () async {
-                                    FFAppState().authEmail =
-                                        _model.fieldForEmailTextController.text;
-                                    safeSetState(() {});
-                                    await actions.sendOtpEmail(
-                                      FFAppState().authEmail,
-                                    );
+                        child: Builder(
+                          builder: (context) {
+                            if (_model.fieldForEmailTextController.text ==
+                                'review@proinsider.ru') {
+                              return Semantics(
+                                label: 'next',
+                                child: FFButtonWidget(
+                                  onPressed: (_model.fieldForPasswordTextController
+                                                  .text ==
+                                              '')
+                                      ? null
+                                      : () async {
+                                          GoRouter.of(context)
+                                              .prepareAuthEvent();
 
-                                    context.pushNamed(
-                                      ValidateCodePageWidget.routeName,
-                                      extra: <String, dynamic>{
-                                        '__transition_info__': TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.rightToLeft,
-                                          duration: Duration(milliseconds: 150),
+                                          final user =
+                                              await authManager.signInWithEmail(
+                                            context,
+                                            _model.fieldForEmailTextController
+                                                .text,
+                                            _model
+                                                .fieldForPasswordTextController
+                                                .text,
+                                          );
+                                          if (user == null) {
+                                            return;
+                                          }
+
+                                          context.goNamedAuth(
+                                              LoggedInSplashScreenWidget
+                                                  .routeName,
+                                              context.mounted);
+                                        },
+                                  text: 'Войти',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: 48.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          font: GoogleFonts.roboto(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: FlutterFlowTheme.of(context)
+                                              .whiteText,
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontStyle,
                                         ),
-                                      },
-                                    );
-                                  },
-                            text: 'Продолжить',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 48.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    font: GoogleFonts.roboto(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                    color:
-                                        FlutterFlowTheme.of(context).whiteText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
+                                    elevation: 0.0,
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    disabledColor: Color(0x7E4E7BFF),
                                   ),
-                              elevation: 0.0,
-                              borderRadius: BorderRadius.circular(24.0),
-                              disabledColor: Color(0x7E4E7BFF),
-                            ),
-                          ),
+                                ),
+                              );
+                            } else {
+                              return Semantics(
+                                label: 'next',
+                                child: FFButtonWidget(
+                                  onPressed: (functions.isEmailValid(_model
+                                              .fieldForEmailTextController
+                                              .text) ==
+                                          false)
+                                      ? null
+                                      : () async {
+                                          FFAppState().authEmail = _model
+                                              .fieldForEmailTextController.text;
+                                          safeSetState(() {});
+                                          await actions.sendOtpEmail(
+                                            FFAppState().authEmail,
+                                          );
+
+                                          context.pushNamed(
+                                            ValidateCodePageWidget.routeName,
+                                            extra: <String, dynamic>{
+                                              '__transition_info__':
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .rightToLeft,
+                                                duration:
+                                                    Duration(milliseconds: 150),
+                                              ),
+                                            },
+                                          );
+                                        },
+                                  text: 'Продолжить',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: 48.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          font: GoogleFonts.roboto(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: FlutterFlowTheme.of(context)
+                                              .whiteText,
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontStyle,
+                                        ),
+                                    elevation: 0.0,
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    disabledColor: Color(0x7E4E7BFF),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
                       ),
                       if (FFAppState().isGoogleAuthEnabled == true)

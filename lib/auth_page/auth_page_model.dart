@@ -10,13 +10,24 @@ class AuthPageModel extends FlutterFlowModel<AuthPageWidget> {
   FocusNode? fieldForEmailFocusNode;
   TextEditingController? fieldForEmailTextController;
   String? Function(BuildContext, String?)? fieldForEmailTextControllerValidator;
+  // State field(s) for Field_for_password widget.
+  FocusNode? fieldForPasswordFocusNode;
+  TextEditingController? fieldForPasswordTextController;
+  late bool fieldForPasswordVisibility;
+  String? Function(BuildContext, String?)?
+      fieldForPasswordTextControllerValidator;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    fieldForPasswordVisibility = false;
+  }
 
   @override
   void dispose() {
     fieldForEmailFocusNode?.dispose();
     fieldForEmailTextController?.dispose();
+
+    fieldForPasswordFocusNode?.dispose();
+    fieldForPasswordTextController?.dispose();
   }
 }
