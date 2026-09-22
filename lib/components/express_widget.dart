@@ -222,7 +222,7 @@ class _ExpressWidgetState extends State<ExpressWidget> {
                               child: Text(
                                 valueOrDefault<String>(
                                   widget.totalOdds.toString(),
-                                  '3.55',
+                                  '3.50',
                                 ),
                                 style: FlutterFlowTheme.of(context)
                                     .labelSmall
